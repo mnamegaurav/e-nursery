@@ -39,7 +39,7 @@ $ python manage.py runserver
 | List all plants (user) | GET | /core/api/plants/ |
 | View a plant (user) | GET | /core/api/plants/<id>/ |
 | Place order (user) | POST | /core/api/orders/ |
-| View orders (nursery) | GET | /core/api/orders/<id>/ |
+| View orders (nursery) | GET | /core/api/myshop/orders/ |
 
 
 
