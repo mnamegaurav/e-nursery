@@ -21,7 +21,7 @@ class PlantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Plant
-        fields = ('id', 'name', 'price', 'shop', 'added_on', 'added_by',)
+        fields = ('id', 'name', 'price', 'image', 'shop', 'added_on', 'added_by',)
         read_only_fields = ('id', 'added_on', 'added_by',)
 
 

@@ -10,7 +10,7 @@ class ShopAdmin(admin.ModelAdmin):
 
 @admin.register(Plant)
 class PlantAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'shop', 'added_on')
+    list_display = ('id', 'name', 'image', 'price', 'shop', 'added_on')
 
 
 @admin.register(Cart)

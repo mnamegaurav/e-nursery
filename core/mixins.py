@@ -16,3 +16,5 @@ class NurseryPermissionMixin:
         elif self.action in user_actions:
             permission_classes = [IsAuthenticated,]
         return [permission() for permission in permission_classes]
+
+

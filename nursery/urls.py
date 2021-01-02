@@ -30,9 +30,16 @@ if settings.DEBUG==True:
 """
 All API Routes -
 
+Authentication Routes-
+Signup -    /user/auth/users/
+Signin -    /user/auth/users/
+Logout -    /user/auth/users/
+
+
 Available for All authenticated users-
-All Shops -           /core/api/shops/
-All Plants -          /core/api/plants/
+List All Shops -           /core/api/shops/
+List All Plants -          /core/api/plants/
+Veiew a Plants -          /core/api/plants/<id>
 My Cart -             /core/api/cart/
 My Orders -           /core/api/orders/
 

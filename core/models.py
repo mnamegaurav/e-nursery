@@ -3,7 +3,10 @@ from django.contrib.auth import get_user_model
 
 from crum import get_current_user
 
-from core.utils import total_price_calculator
+from core.utils import (
+    total_price_calculator, 
+    set_added_by
+    )
 
 
 User = get_user_model()
@@ -19,9 +22,7 @@ class Shop(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        current_user = get_current_user()
-        if current_user and current_user.pk:
-            self.added_by = current_user
+        set_added_by(self)
         super(Shop, self).save(*args, **kwargs)
 
 
@@ -29,6 +30,7 @@ class Shop(models.Model):
 class Plant(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='plants', null=True, blank=True)
     price = models.PositiveSmallIntegerField()
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
@@ -38,9 +40,7 @@ class Plant(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        current_user = get_current_user()
-        if current_user and current_user.pk:
-            self.added_by = current_user
+        set_added_by(self)
         super(Plant, self).save(*args, **kwargs)
 
 
@@ -55,16 +55,14 @@ class Cart(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        current_user = get_current_user()
-        if current_user and current_user.pk:
-            self.added_by = current_user
+        set_added_by(self)
         super(Cart, self).save(*args, **kwargs)
 
     @property
     def total_price(self):
         calculated_total_price = total_price_calculator(self)
         return calculated_total_price
-    
+
     @property
     def all_plants(self):
         return str(";".join([plant.name for plant in self.plants.all()]))
@@ -81,9 +79,7 @@ class Order(models.Model):
         return str(self.total_price)
 
     def save(self, *args, **kwargs):
-        current_user = get_current_user()
-        if current_user and current_user.pk:
-            self.added_by = current_user
+        set_added_by(self)
         super(Order, self).save(*args, **kwargs)
 
     @property

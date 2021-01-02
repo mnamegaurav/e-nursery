@@ -159,4 +159,10 @@ DJOSER = {
         'user': 'user.serializers.CustomUserCreateSerializer',
         'current_user': 'user.serializers.CustomUserCreateSerializer',
     },
+    'PERMISSIONS': {
+        'user': ['djoser.permissions.CurrentUserOrAdmin'],
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
+        'token_create': ['rest_framework.permissions.AllowAny'],
+        'token_destroy': ['rest_framework.permissions.IsAuthenticated'],
+    }
 }
