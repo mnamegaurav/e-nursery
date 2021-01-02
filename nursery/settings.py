@@ -84,11 +84,14 @@ WSGI_APPLICATION = 'nursery.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dc136pnf3svtcl',
+        'USER': 'rfirpdeigxclvw',
+        'PASSWORD': 'fcc7d4c81251588f7ba329f44a2300a00096531be4b2d3ee5ae8eba21e42386c',
+        'HOST': 'ec2-54-170-123-247.eu-west-1.compute.amazonaws.com',
+        'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
