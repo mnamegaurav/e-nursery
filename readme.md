@@ -37,7 +37,7 @@ $ python manage.py runserver
 | Login (user and nursery) | POST | /user/auth/jwt/create/ |
 | Add a plant (nursery) (with image, price, name) | POST | /core/api/plants/ |
 | List all plants (user) | GET | /core/api/plants/ |
-| View a plant (user) | GET | /core/api/plants/<id>/ |
+| View a plant (user) | GET | /core/api/plants/ID/ |
 | Place order (user) | POST | /core/api/orders/ |
 | View orders (nursery) | GET | /core/api/myshop/orders/ |
 
