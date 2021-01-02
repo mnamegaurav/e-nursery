@@ -18,7 +18,7 @@ class CartAdmin(admin.ModelAdmin):
     list_display = ('id', 'get_plants', 'added_on', 'total_price',)
 
     def get_plants(self, obj):
-        return ";".join([plant for plant in self.plants.all()])
+        return obj.all_plants
     get_plants.short_description = 'Plants'
 
 
