@@ -79,4 +79,4 @@ class MyShopOrdersAPIView(ListAPIView):
     permission_classes = (IsAuthenticated, IsNursery,)
 
     def get_queryset(self):
-        return Order.objects.filter(plants__added_by=self.request.user)
+        return Order.objects.filter(plants__added_by=self.request.user).distinct()
