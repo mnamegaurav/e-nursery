@@ -15,9 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('core/', include('core.urls')),
     path('user/', include('user.urls')),
 ]
+
+if settings.DEBUG==True:
+    urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+
+"""
+All API Routes -
+
+Available for All authenticated users-
+All Shops -           /core/api/shops/
+All Plants -          /core/api/plants/
+My Cart -             /core/api/cart/
+My Orders -           /core/api/orders/
+
+Only for nurseries -
+My Shops -            /core/api/my/shops/
+My Shop Orders -      /core/api/myshop/orders/
+"""

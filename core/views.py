@@ -12,6 +12,7 @@ from rest_framework.permissions import (
     IsAuthenticated
     )
 
+from user.permissions import IsNursery, IsOwner
 from core.mixins import NurseryPermissionMixin
 from core.models import Shop, Plant, Cart, Order
 from core.serializers import (
@@ -75,7 +76,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 class MyShopOrdersAPIView(ListAPIView):
     serializer_class = OrderSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsNursery,)
 
     def get_queryset(self):
         return Order.objects.filter(plants__added_by=self.request.user)
