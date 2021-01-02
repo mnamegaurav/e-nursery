@@ -14,7 +14,7 @@ class IsNursery(BasePermission):
 
 class IsOwner(BasePermission):
     """
-    Handles object level permissions for users.
+    Handles object level permissions for objects.
     """
 
     def has_object_permission(self, request, view, obj):

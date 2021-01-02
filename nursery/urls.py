@@ -32,8 +32,8 @@ All API Routes -
 
 Authentication Routes-
 Signup -    /user/auth/users/
-Signin -    /user/auth/users/
-Logout -    /user/auth/users/
+Signin -    /user/auth/jwt/create/ then /token/login/
+Logout -    /token/logout/
 
 
 Available for All authenticated users-

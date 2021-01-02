@@ -10,6 +10,9 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def create_initial_things_for_user(sender, instance, created, **kwargs):
     if created:
+        """
+        Create an initial shop for every nursery.
+        """
         if instance.is_nursery:
             Shop.objects.create(name=f"{instance.username}'s shop", added_by=instance)
 
