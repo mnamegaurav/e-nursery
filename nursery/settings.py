@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'p^$d-k6n5528h()b*!pmc9ktlfve$7i3t4redv5c1usni@!%oc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     # local apps
     'core.apps.CoreConfig',
     'user.apps.UserConfig',
+
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -145,7 +147,9 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 # JWT settings
