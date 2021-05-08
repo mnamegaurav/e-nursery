@@ -40,7 +40,7 @@ You can find the project live [here](https://enursery.herokuapp.com/) :point_lef
 | Create a New Order | POST | /api/me/order/create/ |
 | Retrieve or Cance an Order | GET, PUT | /api/me/order/<ORDER_ID>/ |
 | ------ | ------ | ------ |
-| Get a Nursery Orders | GET | /api/shop/<SHOP_ID>/orders |
+| Get a Nursery Orders | GET | /api/nursery/orders/ |
 
 ### Set this project locally :computer:
 
