@@ -18,34 +18,25 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url
+from django.views.generic import TemplateView
 
-from rest_framework.permissions import AllowAny
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
-
-schema_view = get_schema_view(
-   openapi.Info(
-      title="Snippets API",
-      default_version='v1',
-      description="Test description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="nursery@email.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=(AllowAny,),
-)
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(r'^', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('', include('rest_framework.urls')),
-
     path('', include('core.urls')),
-    path('user/', include('user.urls')),
+    path('', include('accounts.urls')),
+
+    path('openapi', get_schema_view(
+        title="Your Project",
+        description="API for all things …",
+        version="1.0.0"
+    ), name='openapi-schema'),
+
+    path('', TemplateView.as_view(
+        template_name='doc.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='api_doc'),
 ]
 
 if settings.DEBUG==True:
@@ -54,20 +45,41 @@ if settings.DEBUG==True:
 """
 All API Routes -
 
+-------------
 Authentication Routes-
-Signup -    /user/auth/users/
-Signin -    /user/auth/jwt/create/ then /token/login/
-Logout -    /token/logout/
+# Signup -    /api/signup
+# Signin -    /api/signin
+# Logout -    /api/signout
+-------------
 
 
-Available for All authenticated users-
-List All Shops -           /core/api/shops/
-List All Plants -          /core/api/plants/
-Veiew a Plants -          /core/api/plants/<id>
-My Cart -             /core/api/cart/
-My Orders -           /core/api/orders/
 
-Only for nurseries -
-My Shops -            /core/api/my/shops/
-My Shop Orders -      /core/api/myshop/orders/
+-------------
+For Nurseries and Other Users
+
+# Get All Shops -               /api/shops
+# Create a Shop -               /api/shop/create
+# Update/Get/Delete a Shop -    /api/shop/<id>
+
+# Get All Plants -               /api/plants
+# Create a Plant -               /api/plant/create
+# Update/Get/Delete a Plant -    /api/plant/<id>
+-------------
+
+
+
+
+-------------
+For User with having object permissions only
+
+# Get My Cart with Items - /api/me/cart   [GET, PUT]
+
+# Get All My Orders -                 /api/me/orders
+# Get or Cancel a Order -             /api/me/order/<orderId>
+# Create a new Order -                /api/me/order/create
+-------------
+
+
+For Nurseries-
+# Get my shop orders -             /api/shop/<shopId>/orders
 """

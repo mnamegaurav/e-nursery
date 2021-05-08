@@ -5,7 +5,7 @@ from core.models import Shop, Plant, Cart, Order
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'added_on', 'added_by')
+    list_display = ('id', 'name', 'added_on', 'user')
 
 
 @admin.register(Plant)
@@ -24,7 +24,7 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'get_plants', 'added_on', 'total_price', 'added_by')
+    list_display = ('id', 'get_plants', 'added_on', 'total_price', 'user')
     
     def get_plants(self, obj):
         return obj.all_plants

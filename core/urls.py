@@ -1,26 +1,39 @@
+from django.urls import path
+
 from django.urls import path, include
 
-from rest_framework import routers
-
 from core.views import (
-    ShopViewSet,
-    MyShopViewSet,
-    PlantViewSet,
-    OrderViewSet,
-    MyShopOrdersAPIView,
-    CartAPIView,
+    CartRetrieveUpdateAPIView,
+
+    OrdersListAPIView,
+    OrderCreateAPIView,
+    # OrderDetailCancelAPIView,
+    NurseryOrdersAPIView,
+
+    ShopsListAPIView,
+    ShopsCreateAPIView,
+    ShopRetrieveUpdateDestroyAPIView,
+
+    PlantsListAPIView,
+    PlantsCreateAPIView,
+    PlantRetrieveUpdateDestroyAPIView,
     )
 
 
-router = routers.SimpleRouter()
-router.register('shops', ShopViewSet, basename='shops')
-router.register('my/shops', MyShopViewSet, basename='my_shops')
-router.register('plants', PlantViewSet, basename='plants')
-router.register('orders', OrderViewSet, basename='orders')
-
-
 urlpatterns = [
-    path('api/', include(router.urls)),
-    path('api/cart/', CartAPIView.as_view(), name='cart_api'),
-    path('api/myshop/orders/', MyShopOrdersAPIView.as_view(), name='my_shop_orders'),
+    path('api/me/cart/', CartRetrieveUpdateAPIView.as_view()),
+
+    path('api/me/orders/', OrdersListAPIView.as_view()),
+    path('api/me/order/create/', OrderCreateAPIView.as_view()),
+    # path('api/me/order/<int:id>/', OrderDetailCancelAPIView.as_view()),
+
+    path('api/nursery/orders/', NurseryOrdersAPIView.as_view()),
+
+    path('api/shops/', ShopsListAPIView.as_view()),
+    path('api/shop/create/', ShopsCreateAPIView.as_view()),
+    path('api/shop/<int:pk>/', ShopRetrieveUpdateDestroyAPIView.as_view()),
+
+    path('api/plants/', PlantsListAPIView.as_view()),
+    path('api/plant/create/', PlantsCreateAPIView.as_view()),
+    path('api/plant/<int:pk>/', PlantRetrieveUpdateDestroyAPIView.as_view()),
 ]

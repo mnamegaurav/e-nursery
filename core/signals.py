@@ -11,12 +11,6 @@ User = get_user_model()
 def create_initial_things_for_user(sender, instance, created, **kwargs):
     if created:
         """
-        Create an initial shop for every nursery.
-        """
-        if instance.is_nursery:
-            Shop.objects.create(name=f"{instance.username}'s shop", added_by=instance)
-
-        """
         Create an empty cart for users and nurseries
         """
-        Cart.objects.create(added_by=instance)
+        Cart.objects.create(user=instance)

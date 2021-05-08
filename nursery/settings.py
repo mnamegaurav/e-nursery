@@ -40,18 +40,15 @@ INSTALLED_APPS = [
 
     # third party apps
     'rest_framework',
-    'djoser',
+    'rest_framework_simplejwt.token_blacklist',
 
     # local apps
     'core.apps.CoreConfig',
-    'user.apps.UserConfig',
-
-    'drf_yasg',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -65,7 +62,7 @@ ROOT_URLCONF = 'nursery.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,14 +81,21 @@ WSGI_APPLICATION = 'nursery.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'dc136pnf3svtcl',
+#         'USER': 'rfirpdeigxclvw',
+#         'PASSWORD': 'fcc7d4c81251588f7ba329f44a2300a00096531be4b2d3ee5ae8eba21e42386c',
+#         'HOST': 'ec2-54-170-123-247.eu-west-1.compute.amazonaws.com',
+#         'PORT': 5432,
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dc136pnf3svtcl',
-        'USER': 'rfirpdeigxclvw',
-        'PASSWORD': 'fcc7d4c81251588f7ba329f44a2300a00096531be4b2d3ee5ae8eba21e42386c',
-        'HOST': 'ec2-54-170-123-247.eu-west-1.compute.amazonaws.com',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -117,9 +121,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-in'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Calcutta'
 
 USE_I18N = True
 
@@ -127,16 +131,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+STATIC_ROOT = BASE_DIR / 'static'
 
-STATIC_ROOT = BASE_DIR / 'static_files'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Custom Auth User Model
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 # Django Rest Framework Settings
 REST_FRAMEWORK = {
@@ -147,28 +154,5 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-}
-
-# JWT settings
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-}
-
-
-# djoser settings
-DJOSER = {
-    'SERIALIZERS': {
-        'user_create': 'user.serializers.CustomUserCreateSerializer',
-        'user': 'user.serializers.CustomUserCreateSerializer',
-        'current_user': 'user.serializers.CustomUserCreateSerializer',
-    },
-    'PERMISSIONS': {
-        'user': ['djoser.permissions.CurrentUserOrAdmin'],
-        'user_list': ['rest_framework.permissions.IsAdminUser'],
-        'token_create': ['rest_framework.permissions.AllowAny'],
-        'token_destroy': ['rest_framework.permissions.IsAuthenticated'],
-    }
 }

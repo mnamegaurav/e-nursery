@@ -8,7 +8,7 @@ class IsNursery(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and request.user.is_nursery)
+        return bool(request.user and request.user.is_nursery)
 
 
 
@@ -20,6 +20,6 @@ class IsOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
 
         # check if user is owner
-        if obj.added_by:
-            return bool(request.user == obj.added_by)
+        if obj.user:
+            return bool(request.user == obj.user)
         return False

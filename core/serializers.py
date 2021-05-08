@@ -7,40 +7,44 @@ from core.models import Shop, Plant, Cart, Order
 # Serializers
 
 class ShopSerializer(serializers.ModelSerializer):
-    added_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Shop
-        fields = ('id', 'name', 'added_on', 'added_by',)
-        read_only_fields = ('id', 'added_on', 'added_by',)
+        fields = ('id', 'name', 'added_on', 'user',)
+        read_only_fields = ('id', 'added_on', 'user',)
 
 
 
 class PlantSerializer(serializers.ModelSerializer):
-    added_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
     class Meta:
         model = Plant
-        fields = ('id', 'name', 'price', 'image', 'shop', 'added_on', 'added_by',)
-        read_only_fields = ('id', 'added_on', 'added_by',)
+        fields = ('id', 'name', 'price', 'image', 'shop', 'added_on', 'user')
+        read_only_fields = ('id', 'added_on', 'user')
 
 
 
 class CartSerializer(serializers.ModelSerializer):
     total_price = serializers.ReadOnlyField()
+    all_plants = PlantSerializer(source='plants_set',read_only=True)
 
     class Meta:
         model = Cart
-        fields = ('plants', 'added_on', 'total_price',)
-        read_only_fields = ('added_on',)
+        fields = ('plants', 'added_on', 'total_price', 'all_plants')
+        read_only_fields = ('added_on', 'all_plants')
 
 
 
 class OrderSerializer(serializers.ModelSerializer):
     total_price = serializers.ReadOnlyField()
-    added_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    all_plants = PlantSerializer(source='plants_set',read_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Order
-        fields = ('id', 'plants', 'added_on', 'total_price', 'added_by')
-        read_only_fields = ('id', 'added_on', 'added_by')
+        fields = ('id', 'plants', 'added_on', 'total_price', 'user', 'all_plants' , 'is_active')
+        read_only_fields = ('id', 'added_on', 'user', 'all_plants')
+
+    # overrride the perform_update or delete method to change the active status of order
