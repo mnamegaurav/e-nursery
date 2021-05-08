@@ -50,7 +50,7 @@ class Order(models.Model):
     plants = models.ManyToManyField(Plant, blank=True)
     added_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
 
     def __str__(self):

@@ -8,7 +8,8 @@ from core.views import (
     OrdersListAPIView,
     OrderCreateAPIView,
     OrderRetrieveUpdateAPIView,
-    NurseryOrdersAPIView,
+    
+    NurseryOrdersListAPIView,
 
     ShopsListAPIView,
     ShopsCreateAPIView,
@@ -25,9 +26,9 @@ urlpatterns = [
 
     path('api/me/orders/', OrdersListAPIView.as_view()),
     path('api/me/order/create/', OrderCreateAPIView.as_view()),
-    path('api/me/order/<int:id>/', OrderRetrieveUpdateAPIView.as_view()),
+    path('api/me/order/<int:pk>/', OrderRetrieveUpdateAPIView.as_view()),
 
-    path('api/nursery/orders/', NurseryOrdersAPIView.as_view()),
+    path('api/nursery/orders/', NurseryOrdersListAPIView.as_view()),
 
     path('api/shops/', ShopsListAPIView.as_view()),
     path('api/shop/create/', ShopsCreateAPIView.as_view()),

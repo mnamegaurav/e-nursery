@@ -47,4 +47,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ('id', 'plants', 'added_on', 'total_price', 'user', 'all_plants' , 'is_active')
         read_only_fields = ('id', 'added_on', 'user', 'all_plants')
 
-    # overrride the perform_update or delete method to change the active status of order
+    # overrride the update method to change the active status of order
+    def update(self, instance, validated_data):
+        validated_data = {'is_active': validated_data.pop('is_active')}
+        return super().update(instance, validated_data)
