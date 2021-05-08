@@ -44,9 +44,12 @@ You can find the project live [here](https://enursery.herokuapp.com/) :point_lef
 
 ### Set this project locally :computer:
 
-1. Go to the [project repo](https://github.com/hamhaingaurav/django_reactjs_nursery) and fork it by clicking "Fork" ( or Download the Zip file directly and start from the step 3 )<br>
+1. Fork this Repository (or Download the Zip file directly and start from the step 3).
 
-2. Open terminal / command prompt and Clone the project using `git clone https://github.com/YOUR_USERNAME/django_reactjs_nursery.git`
+2. Open terminal / command prompt and Clone the project using 
+    ```bash
+    git clone https://github.com/mnamegaurav/e-nursery.git
+    ```
   
 3. Create a python3 virtual environment:
 
