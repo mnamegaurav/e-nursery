@@ -1,58 +1,112 @@
-# A Nursery App -  
+# E-Nursery
 
-### Live Demo-
-#### https://dphi-nursery-app-gaurav.herokuapp.com/
+## Application overview -
 
+### Users can signup and see all the plants available from different nurseries. They should also be able to add the plants to their cart and place orders. Nurseries should be able to signup and add plants to their shop. They should also be able to view orders placed by users.
 
-### Application overview - 
-##### Users  should be able to signup and see all the plants available from different nurseries. They should also be able to add the plants to their cart and place orders. Nurseries should be able to signup and add plants to their shop. They should also be able to view orders placed by users.
-
-
-# To Run this Project on local -
-
-```sh
-$ python manage.py makemigrations core user
-
-$ python manage.py migrate
-
-$ python manage.py runserver
-```
-
-#### demo accounts-
-| username | passsword |
-| ------ | ------ |
-| test_nursery | "test*#365" |
-| test_nursery2 | "test*#365" |
-| test_user1 | "test*#365" |
-| test_user2 | "test*#365" |
-| test_user3 | "test*#365" |
+### Live :sparkles: 
+You can find the project live [here](https://enursery.herokuapp.com/) :point_left:
 
 
+### Features :information_source: 
+
+:heavy_check_mark: Robust and Secure APIs <br>
+
+:heavy_check_mark: Authentication System <br>
+
+:heavy_check_mark: CURD Operations <br>
+
+:heavy_check_mark: Buying a Plant, Cart System <br>
 
 
-### APIs to
+# API Endpoints -
 | Feature | Method | API |
 | ------ | ------ | ------ |
-| Signup (user and nursery) | POST | /user/auth/users/ |
-| Login (user and nursery) | POST | /user/auth/jwt/create/ |
-| Add a plant (nursery) (with image, price, name) | POST | /core/api/plants/ |
-| List all plants (user) | GET | /core/api/plants/ |
-| View a plant (user) | GET | /core/api/plants/ID/ |
-| Place order (user) | POST | /core/api/orders/ |
-| View orders (nursery) | GET | /core/api/myshop/orders/ |
+| Signup | POST | /api/signup/ |
+| Signin | POST | /api/signin/ |
+| SignOut | POST | /api/signout/ |
+| SignOut | POST | /api/signout/ |
+| ------ | ------ | ------ |
+| All Shops | GET | /api/shops/ |
+| Create a Shop | POST | /api/shop/create/ |
+| Retrieve, Update, Delete a Shop | GET,PUT,DELETE | /api/shop/<SHOP_ID>/ |
+| All Plants | GET | /api/plants/ |
+| Create a Plant | POST | /api/plant/create/ |
+| Retrieve a Plant | POST | /api/plant/<PLANT_ID>/ |
+| ------ | ------ | ------ |
+| My Cart | GET, PUT | /api/me/cart/ |
+| ------ | ------ | ------ |
+| My Orders | GET | /api/me/orders/ |
+| Create a New Order | POST | /api/me/order/create/ |
+| Retrieve or Cance an Order | GET, PUT | /api/me/order/<ORDER_ID>/ |
+| ------ | ------ | ------ |
+| Get a Nursery Orders | GET | /api/shop/<SHOP_ID>/orders |
 
+### Set this project locally :computer:
 
+1. Go to the [project repo](https://github.com/hamhaingaurav/django_reactjs_nursery) and fork it by clicking "Fork" ( or Download the Zip file directly and start from the step 3 )<br>
 
-```sh
-All API Routes -
+2. Open terminal / command prompt and Clone the project using `git clone https://github.com/YOUR_USERNAME/django_reactjs_nursery.git`
+  
+3. Create a python3 virtual environment:
 
- - Available for All authenticated users-
- - All Shops -           /core/api/shops/
- - All Plants -          /core/api/plants/
- - My Cart -             /core/api/cart/
- - My Orders -           /core/api/orders/
+    ```bash
+    $ python3 -m venv venv
+    ```
 
-Only for nurseries -
- - My Shops -            /core/api/my/shops/
- - My Shop Orders -      /core/api/myshop/orders/
-```
+    Or, use [virtualenv](https://virtualenv.pypa.io/en/latest/installation.html):
+
+    ```bash
+    $ virtualenv venv
+    ```
+
+4. Activate the virtual environment:
+
+    On Linux or Mac or any Unix based system-
+    
+    ```bash
+    $ source venv/bin/activate
+    ```
+    
+    On Windows-
+    ```
+    > venv\Scripts\activate
+    ```
+
+5. Now Install the dependecies:
+
+    ```bash
+    $ pip install -r requirements.txt
+    ```
+
+6. Creating local settings:
+Create a `local_settings.py` file in the same directory where your `settings.py` resides.
+
+    Copy this code in your `local_settings.py` file -
+    ```
+    DEBUG = True
+    ```
+    
+7. Creating `.env` file:
+Create a `.env` file in the same directory where your `manage.py` resides.
+
+    Copy this text in your `.env` file -
+    ```
+    SECRET_KEY = 'secretkey'
+    ```
+
+8. Run the `migrate` command:
+
+    ```bash
+    $ python manage.py migrate
+    ```
+
+9. Now you are ready to go:
+
+    #### Run the application
+
+    ```bash
+    $ python manage.py runserver
+    ```
+
+# Thanks

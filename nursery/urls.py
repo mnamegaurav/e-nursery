@@ -81,5 +81,5 @@ For User with having object permissions only
 
 
 For Nurseries-
-# Get my shop orders -             /api/shop/<shopId>/orders
+# Get my shop orders -             /api/nursery/orders/
 """
