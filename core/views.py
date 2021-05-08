@@ -59,15 +59,16 @@ class OrderCreateAPIView(CreateAPIView):
 
 
 
-# class OrderDetailCancelAPIView(RetrieveUpdateAPIView):
-#     """
-#     /api/me/order/<id> [GET,POST,]
-#     """
-#     serializer_class = OrderSerializer
-#     permission_classes = (IsAuthenticated, IsOwner, )
+class OrderRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    """
+    Cancel the order or Detail the order
+    /api/me/order/<id> [GET,POST,]
+    """
+    serializer_class = OrderSerializer
+    permission_classes = (IsAuthenticated, IsOwner,)
 
-#     def get_queryset(self):
-#         return self.request.user.orders.all()
+    def get_queryset(self):
+        return self.request.user.orders.all()
 
 
 

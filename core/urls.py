@@ -7,7 +7,7 @@ from core.views import (
 
     OrdersListAPIView,
     OrderCreateAPIView,
-    # OrderDetailCancelAPIView,
+    OrderRetrieveUpdateAPIView,
     NurseryOrdersAPIView,
 
     ShopsListAPIView,
@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('api/me/orders/', OrdersListAPIView.as_view()),
     path('api/me/order/create/', OrderCreateAPIView.as_view()),
-    # path('api/me/order/<int:id>/', OrderDetailCancelAPIView.as_view()),
+    path('api/me/order/<int:id>/', OrderRetrieveUpdateAPIView.as_view()),
 
     path('api/nursery/orders/', NurseryOrdersAPIView.as_view()),
 

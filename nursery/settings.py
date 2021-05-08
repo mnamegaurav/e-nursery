@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
+import dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,18 +20,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p^$d-k6n5528h()b*!pmc9ktlfve$7i3t4redv5c1usni@!%oc'
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Jazzmin Admin theme
+    "jazzmin",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
 
     # third party apps
     'rest_framework',
+    "corsheaders",
     'rest_framework_simplejwt.token_blacklist',
 
     # local apps
@@ -50,6 +55,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,27 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nursery.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'dc136pnf3svtcl',
-#         'USER': 'rfirpdeigxclvw',
-#         'PASSWORD': 'fcc7d4c81251588f7ba329f44a2300a00096531be4b2d3ee5ae8eba21e42386c',
-#         'HOST': 'ec2-54-170-123-247.eu-west-1.compute.amazonaws.com',
-#         'PORT': 5432,
-#     }
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -145,6 +130,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Custom Auth User Model
 AUTH_USER_MODEL = 'accounts.User'
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "django_cache_table",
+    }
+}
+
 # Django Rest Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -152,7 +144,41 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-    ),
 }
+
+# Other Settings and Configs
+from nursery.jazzmin_config import *
+
+
+if DEBUG:
+    # All the settings when project is running locally
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+    MIDDLEWARE.extend(
+        [
+            "debug_toolbar.middleware.DebugToolbarMiddleware",
+        ]
+    )
+
+    INSTALLED_APPS.extend(
+        [
+            "django_extensions",
+            "debug_toolbar",
+        ]
+    )
+
+
+"""
+If you are running locally-
+    1. Create a 'local_settings.py' in the same location of 'settings.py'
+    2. Write 'DEBUG=True' in the 'local_settings.py' file.
+"""
+try:
+    from nursery.local_settings import *
+except ImportError as e:
+    from nursery.prod_settings import *
