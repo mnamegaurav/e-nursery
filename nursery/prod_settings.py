@@ -17,14 +17,3 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = ["*"]
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'dc136pnf3svtcl',
-#         'USER': 'rfirpdeigxclvw',
-#         'PASSWORD': 'fcc7d4c81251588f7ba329f44a2300a00096531be4b2d3ee5ae8eba21e42386c',
-#         'HOST': 'ec2-54-170-123-247.eu-west-1.compute.amazonaws.com',
-#         'PORT': 5432,
-#     }
-# }
