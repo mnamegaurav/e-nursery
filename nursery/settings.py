@@ -130,6 +130,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Custom Auth User Model
 AUTH_USER_MODEL = 'accounts.User'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
@@ -144,6 +146,16 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 # Other Settings and Configs

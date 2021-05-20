@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function AllPlantsComponent() {
-    return (
-        <div>
-            All plants
-        </div>
-    )
+  return <div>All plants</div>;
 }

@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function OffersComponent() {
-    return (
-        <div>
-            Offers
-        </div>
-    )
+  return <div>Offers</div>;
 }
