@@ -3,6 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
+
 export default function BaseLayout({ children }) {
   const classes = useStyles();
 
@@ -14,12 +23,3 @@ export default function BaseLayout({ children }) {
     </div>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
