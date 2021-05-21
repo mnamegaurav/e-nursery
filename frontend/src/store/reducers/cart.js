@@ -1,0 +1,37 @@
+import {
+  GET_CART,
+  ADD_CART_ITEM,
+  EMPTY_CART,
+  REMOVE_CART_ITEM,
+} from "../actions/types";
+
+const initialState = {
+  cart: [],
+};
+
+export default function cart(state = initialState, action) {
+  switch (action.type) {
+    case GET_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+    case ADD_CART_ITEM:
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
+      };
+    case EMPTY_CART:
+      return {
+        ...state,
+        cart: [],
+      };
+    case REMOVE_CART_ITEM:
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== action.payload),
+      };
+    default:
+      return state;
+  }
+}

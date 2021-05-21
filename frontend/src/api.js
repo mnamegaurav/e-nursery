@@ -11,7 +11,6 @@ export const MY_ORDER_CREATE_API = `${process.env.REACT_APP_BACKEND_API}/me/orde
 export const MY_ORDER_API = `${process.env.REACT_APP_BACKEND_API}/me/order/`;
 
 export const SHOPS_LIST_API = `${process.env.REACT_APP_BACKEND_API}/shops/`;
-export const MY_SHOPS_CREATE_API = `${process.env.REACT_APP_BACKEND_API}/shops/create/`;
 export const MY_SHOP_API = `${process.env.REACT_APP_BACKEND_API}/shop/`;
 
 export const PLANTS_LIST_API = `${process.env.REACT_APP_BACKEND_API}/plants/`;

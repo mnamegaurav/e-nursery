@@ -1,6 +1,25 @@
 import axios from "axios";
 
-import { SIGNIN_API, SIGNUP_API, SIGNOUT_API } from "./index";
+import { SIGNIN_API, SIGNUP_API, SIGNOUT_API } from "../../api";
+
+// Setup config with token - helper function
+export const tokenConfig = () => {
+  // GET TOKEN FROM STATE
+  const token = 'some random token';
+
+  // Headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  // if token add it to headers
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+  return config;
+};
 
 // Signin
 export const signIn = ({ email, password }) => {
