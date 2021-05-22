@@ -28,6 +28,11 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         password1 = validated_data.get('password1')
         password2 = validated_data.get('password2')
 
+        if not is_nursery:
+            raise serializers.ValidationError({
+                'is_nursery': 'is_nursery field is required'
+            })
+
         if password1==password2:
             user = User(email=email, is_nursery=is_nursery)
             user.set_password(password1)

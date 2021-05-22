@@ -32,10 +32,10 @@ class UserSignUpAPIView(APIView):
 
 
 class UserSignOutAPIView(APIView):
-    def post(self, request):
+    def post(self, request, format=None):
         try:
-            token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]
-            token_obj = RefreshToken(token)
+            refresh_token = request.data.get('refresh_token')
+            token_obj = RefreshToken(refresh_token)
             token_obj.blacklist()
             return Response(status=status.HTTP_200_OK)
         except Exception as e:

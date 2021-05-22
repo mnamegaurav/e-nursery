@@ -151,6 +151,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+# CORS HEADERS SETTINGS
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+
 from datetime import timedelta
 
 SIMPLE_JWT = {
