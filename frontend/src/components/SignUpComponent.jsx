@@ -4,14 +4,18 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
-import Copyright from "../layouts/Copyright";
 import SignInImage from "../assets/img/signin.jpg";
+import { signUp } from "../store/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -46,8 +50,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUpComponent() {
+const initialCredentials = {
+  is_nursery: null,
+  email: null,
+  password1: null,
+  password2: null,
+};
+
+function SignUpComponent(props) {
   const classes = useStyles();
+
+  const [crendentials, setCrendentials] = React.useState(initialCredentials);
+  const { isLoading, signUp } = props;
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // submit the form
+    const { is_nursery, email, password1, password2 } = crendentials;
+    if ((is_nursery, email && password1 && password1 === password2)) {
+      signUp(crendentials);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    // console.log(e.target.name, e.target.value);
+    // Set the values into current state
+    setCrendentials((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    // console.log(e.target.name, e.target.checked);
+    setCrendentials((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.checked,
+    }));
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -60,21 +101,8 @@ export default function SignUpComponent() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="name"
-                  name="name"
-                  variant="outlined"
-                  color="secondary"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Full Name"
-                  autoFocus
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -85,6 +113,7 @@ export default function SignUpComponent() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -98,6 +127,7 @@ export default function SignUpComponent() {
                   type="password"
                   id="password1"
                   autoComplete="current-password"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -106,11 +136,24 @@ export default function SignUpComponent() {
                   color="secondary"
                   required
                   fullWidth
-                  name="password"
+                  name="password2"
                   label="Retype Password"
                   type="password"
                   id="password2"
                   autoComplete="current-password"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="secondary"
+                      name="is_nursery"
+                      onChange={handleCheckboxChange}
+                    />
+                  }
+                  label="I want to register as a Nursery accout."
                 />
               </Grid>
             </Grid>
@@ -119,6 +162,7 @@ export default function SignUpComponent() {
               fullWidth
               variant="contained"
               color="secondary"
+              disabled={isLoading}
               className={classes.submit}
             >
               Sign Up
@@ -136,3 +180,13 @@ export default function SignUpComponent() {
     </Grid>
   );
 }
+
+SignUpComponent.propTypes = {
+  signUp: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isLoading: state.authReducer.isLoading,
+});
+
+export default connect(mapStateToProps, { signUp })(SignUpComponent);

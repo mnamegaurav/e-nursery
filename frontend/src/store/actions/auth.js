@@ -14,8 +14,7 @@ import {
 // Setup config with token - helper function
 export const tokenConfig = () => {
   // GET TOKEN FROM STATE
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjIxNjY4NDk2LCJqdGkiOiI4MjY5NGRiODA3Njg0ODVjYjU1N2ZkYmM1ZWFjNmViMCIsInVzZXJfaWQiOjF9.d9N3iGvGq3E8Adx5mQQB2wFU2CZ2xNOlVdcOPfQAAE0";
+  const token = localStorage.getItem("access");
 
   // Headers
   const config = {
@@ -32,47 +31,62 @@ export const tokenConfig = () => {
 };
 
 // Signin
-export const signIn =
-  ({ email, password }) =>
-  (dispatch) => {
-    const url = SIGNIN_API;
-    const data = {
-      email,
-      password,
-    };
+export const signIn = (email, password) => (dispatch) => {
+  const url = SIGNIN_API;
+  const data = JSON.stringify({
+    email,
+    password,
+  });
 
-    if (typeof window !== undefined) {
-      axios
-        .post(url, data)
-        .then((res) => {
-          console.log(res);
-          localStorage.setItem("access", res.access);
-          localStorage.setItem("refresh", res.refresh);
-          dispatch({
-            type: SIGNIN_SUCCESS,
-            payload: res.data,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response) {
-            dispatch({
-              type: SIGNIN_FAIL,
-              payload: err.response.data,
-            });
-          }
-        });
-    }
+  // Headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 
-// Signup
-export const signUp = (user) => (dispatch) => {
-  const url = SIGNUP_API;
-  const data = user;
+  console.log(url, data);
 
   if (typeof window !== undefined) {
     axios
-      .post(url, data)
+      .post(url, data, config)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("access", res.data.access);
+        localStorage.setItem("refresh", res.data.refresh);
+        dispatch({
+          type: SIGNIN_SUCCESS,
+          payload: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log("some error in login bhai", err);
+        if (err.response) {
+          dispatch({
+            type: SIGNIN_FAIL,
+            payload: err.response.data,
+          });
+        }
+      });
+  }
+};
+
+// Signup
+export const signUp = (credentials) => (dispatch) => {
+  const url = SIGNUP_API;
+  const data = JSON.stringify(credentials);
+
+  console.log(data)
+  // Headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  if (typeof window !== undefined) {
+    axios
+      .post(url, data, config)
       .then((res) => {
         console.log(res);
         dispatch({
