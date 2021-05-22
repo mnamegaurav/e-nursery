@@ -24,6 +24,12 @@ export default function auth(state = initialState, action) {
         isLoading: true,
       };
     case USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        user: action.payload,
+      };
     case SIGNIN_SUCCESS:
     case SIGNUP_SUCCESS:
       return {

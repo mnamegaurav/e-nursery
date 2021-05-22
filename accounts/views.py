@@ -4,12 +4,34 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.generics import RetrieveUpdateAPIView
 
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-from accounts.serializers import UserSignUpSerializer
+from accounts.serializers import UserSignUpSerializer, UserDetailSerializer
 
 # Create your views here.
+
+
+class UserDetailAPIView(RetrieveUpdateAPIView):
+    serializer_class = UserDetailSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    def get_object(self):
+        return self.request.user
+
+
+class UserSignInAPIView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            user = UserDetailSerializer(serializer.user).data
+            serializer.validated_data.update({"user": user})
+            return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
 class UserSignUpAPIView(APIView):
@@ -21,10 +43,10 @@ class UserSignUpAPIView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             refresh = RefreshToken.for_user(user)
-            response_data =  {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-                'user': serializer.data,
+            response_data = {
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
+                "user": serializer.data,
             }
             return Response(response_data, status=status.HTTP_201_CREATED)
 
@@ -34,7 +56,7 @@ class UserSignUpAPIView(APIView):
 class UserSignOutAPIView(APIView):
     def post(self, request, format=None):
         try:
-            refresh_token = request.data.get('refresh_token')
+            refresh_token = request.data.get("refresh_token")
             token_obj = RefreshToken(refresh_token)
             token_obj.blacklist()
             return Response(status=status.HTTP_200_OK)

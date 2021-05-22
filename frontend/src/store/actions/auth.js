@@ -1,11 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-import {
-  SIGNIN_API,
-  SIGNUP_API,
-  SIGNOUT_API,
-  TOKEN_REFRESH_API,
-} from "../../api";
+import { SIGNIN_API, SIGNUP_API, SIGNOUT_API, TOKEN_REFRESH_API, USER_DETAIL_API } from '../../api';
 import {
   USER_LOADING,
   USER_LOADED,
@@ -14,55 +9,49 @@ import {
   SIGNOUT_SUCCESS,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
-} from "../actions/types";
+} from '../actions/types';
 
 // Setup config with token - helper function
-export const tokenConfig = () => {
-  // GET TOKEN FROM STATE
-  const token = localStorage.getItem("access");
-
+export const tokenConfig = (accessToken) => {
   // Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
   // if token add it to headers
-  if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
+  if (accessToken) {
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
   }
   return config;
 };
 
 // Load User during app loading
 export const loadUser = () => (dispatch, getState) => {
-  const url = TOKEN_REFRESH_API;
-  const data = JSON.stringify({
-    refresh: localStorage.getItem("refresh"),
+  // USER LOADING
+  dispatch({
+    type: USER_LOADING,
   });
 
+  const url = USER_DETAIL_API;
+  // GET TOKEN FROM STATE
+  const accessToken = getState().authReducer.access;
+
   // Headers
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  const config = tokenConfig(accessToken);
 
   if (typeof window !== undefined) {
     axios
-      .post(url, data, config)
+      .get(url, config)
       .then((res) => {
-        if (res.data && res.data.access) {
-          localStorage.setItem("access", res.data.access);
-        }
         dispatch({
           type: USER_LOADED,
           payload: res.data,
         });
       })
       .catch((err) => {
-        console.log("some error in token refresh bhai", err);
+        console.log('some error in token refresh bhai', err);
         if (err.response) {
           dispatch({
             type: SIGNIN_FAIL,
@@ -84,7 +73,7 @@ export const signIn = (email, password) => (dispatch) => {
   // Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -93,8 +82,8 @@ export const signIn = (email, password) => (dispatch) => {
       .post(url, data, config)
       .then((res) => {
         if (res.data && res.data.access && res.data.refresh) {
-          localStorage.setItem("access", res.data.access);
-          localStorage.setItem("refresh", res.data.refresh);
+          localStorage.setItem('access', res.data.access);
+          localStorage.setItem('refresh', res.data.refresh);
         }
         dispatch({
           type: SIGNIN_SUCCESS,
@@ -121,7 +110,7 @@ export const signUp = (credentials) => (dispatch) => {
   // Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -153,7 +142,7 @@ export const signOut = () => (dispatch) => {
 
   if (typeof window !== undefined) {
     const data = {
-      refresh_token: localStorage.getItem("refresh"),
+      refresh_token: localStorage.getItem('refresh'),
     };
 
     localStorage.clear();

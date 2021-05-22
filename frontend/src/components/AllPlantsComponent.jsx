@@ -33,42 +33,43 @@ export default function AllPlantsComponent() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>    
-      <main>        
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+    <React.Fragment>
+      <Container className={classes.cardGrid} maxWidth="md">
+        {/* End hero unit */}
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Typography variant="h5">All Plants</Typography>
           </Grid>
-        </Container>
-      </main>
+          {cards.map((card) => (
+            <Grid item key={card} xs={12} sm={6} md={4}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Heading
+                  </Typography>
+                  <Typography>
+                    This is a media card. You can use this section to describe
+                    the content.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                <Button size="small" color="secondary">
+                    Details
+                  </Button>
+                  <Button size="small" color="secondary">
+                    Add to Cart
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </React.Fragment>
   );
 }

@@ -5,6 +5,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+class UserDetailSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'is_nursery',
+            'full_name',
+            'username',
+        ]
+
+
 class UserSignUpSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
     password2 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})

@@ -1,0 +1,85 @@
+{
+    "python.pythonPath": "${workspaceRoot}/env/bin/python",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pycodestyleEnabled": true,
+    "python.formatting.autopep8Path": "${workspaceRoot}/env/bin/autopep8",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/*.pyc": true,
+        "**/__pycache__/": true,
+        "out": true,
+        ".nyc_output": true,
+        "obj": true,
+        "bin": true,
+        "**/__pycache__": true,
+        "**/node_modules": true,
+        ".vscode-test": false,
+        ".vscode test": false,
+        "**/.mypy_cache/**": true,
+        "**/.ropeproject/**": true
+    },
+    "search.exclude": {
+        "**/.git": true,
+        "**/.venv": true,
+        "**/.venv3": true,
+        "**/tmp": true,
+        "out": true,
+        "**/node_modules": true,
+        "coverage": true,
+        "languageServer*/**": true,
+        ".vscode-test": true,
+        ".vscode test": true
+    },
+    "python.formatting.provider": "black",
+    "files.associations": {
+        "**/*.html": "html",
+        "**/templates/**/*.html": "django-html",
+        "**/templates/**/*": "django-txt",
+        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+    "emmet.includeLanguages": {"django-html": "html"},
+    "[python]": {
+        "editor.formatOnSave": true
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[JSON]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[YAML]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "typescript.tsdk": "./node_modules/typescript/lib", // we want to use the TS server from our node_modules folder to control its version
+    "python.linting.enabled": false,
+    "python.testing.promptToConfigure": false,
+    "python.workspaceSymbols.enabled": false,
+    "typescript.preferences.quoteStyle": "single",
+    "javascript.preferences.quoteStyle": "single",
+    "typescriptHero.imports.stringQuoteStyle": "'",
+    "prettier.printWidth": 120,
+    "prettier.singleQuote": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "python.analysis.logLevel": "Trace",
+    "python.analysis.downloadChannel": "beta",
+    "cucumberautocomplete.skipDocStringsFormat": true,
+    "python.linting.flake8Args": [
+        // Match what black does.
+        "--max-line-length=100"
+    ],
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "debug.javascript.usePreview": false
+}

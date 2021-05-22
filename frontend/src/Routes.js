@@ -51,11 +51,11 @@ export default function Routes() {
   return (
     <Router>
       <Switch>
-        <PrivateRoute path={routes.root} exact component={HomeComponent} />
         <Route path={routes.signin} exact component={SignInComponent} />
         <Route path={routes.signup} exact component={SignUpComponent} />
         <Route path={routes.signup} exact component={SignUpComponent} />
-        <Route path={routes.cart} exact component={CartComponent} />
+        <PrivateRoute path={routes.root} exact component={HomeComponent} />
+        <PrivateRoute path={routes.cart} exact component={CartComponent} />
         <Route component={PageNotFoundComponent} />
       </Switch>
     </Router>
