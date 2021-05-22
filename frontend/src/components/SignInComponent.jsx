@@ -10,12 +10,13 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import Copyright from "../layouts/Copyright";
 import SignInImage from "../assets/img/signin.jpg";
 import { signIn } from "../store/actions/auth";
+import { routes } from "../Routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -137,12 +138,12 @@ function SignInComponent(props) {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2" color="secondary">
+                  <Link href={routes.signup} variant="body2" color="secondary">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" color="secondary">
+                  <Link href={routes.signup} variant="body2" color="secondary">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -161,6 +162,7 @@ function SignInComponent(props) {
 SignInComponent.propTypes = {
   signIn: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

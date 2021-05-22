@@ -11,11 +11,12 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import SignInImage from "../assets/img/signin.jpg";
 import { signUp } from "../store/actions/auth";
+import { routes } from "../Routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,7 +62,7 @@ function SignUpComponent(props) {
   const classes = useStyles();
 
   const [crendentials, setCrendentials] = React.useState(initialCredentials);
-  const { isLoading, signUp } = props;
+  const { isAuthenticated, isLoading, signUp } = props;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -91,101 +92,111 @@ function SignUpComponent(props) {
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  color="secondary"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  color="secondary"
-                  required
-                  fullWidth
-                  name="password1"
-                  label="Password"
-                  type="password"
-                  id="password1"
-                  autoComplete="current-password"
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  color="secondary"
-                  required
-                  fullWidth
-                  name="password2"
-                  label="Retype Password"
-                  type="password"
-                  id="password2"
-                  autoComplete="current-password"
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="secondary"
-                      name="is_nursery"
-                      onChange={handleCheckboxChange}
-                    />
-                  }
-                  label="I want to register as a Nursery accout."
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="secondary"
-              disabled={isLoading}
-              className={classes.submit}
-            >
+    <>
+      {isAuthenticated && <Redirect to="/" />}
+      <Grid container component="main" className={classes.root}>
+        <Grid item xs={false} md={7} className={classes.image} />
+        <Grid item xs={12} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
               Sign Up
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2" color="secondary">
-                  Already have an account? Sign in
-                </Link>
+            </Typography>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={handleFormSubmit}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    color="secondary"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    color="secondary"
+                    required
+                    fullWidth
+                    name="password1"
+                    label="Password"
+                    type="password"
+                    id="password1"
+                    autoComplete="current-password"
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    color="secondary"
+                    required
+                    fullWidth
+                    name="password2"
+                    label="Retype Password"
+                    type="password"
+                    id="password2"
+                    autoComplete="current-password"
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="secondary"
+                        name="is_nursery"
+                        onChange={handleCheckboxChange}
+                      />
+                    }
+                    label="I want to register as a Nursery accout."
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                disabled={isLoading}
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <Link href={routes.signin} variant="body2" color="secondary">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }
 
 SignUpComponent.propTypes = {
   signUp: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
   isLoading: state.authReducer.isLoading,
 });
 

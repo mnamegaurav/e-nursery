@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { SIGNIN_API, SIGNUP_API, SIGNOUT_API } from "../../api";
+import {
+  SIGNIN_API,
+  SIGNUP_API,
+  SIGNOUT_API,
+  TOKEN_REFRESH_API,
+} from "../../api";
 import {
   USER_LOADING,
   USER_LOADED,
@@ -30,6 +35,44 @@ export const tokenConfig = () => {
   return config;
 };
 
+// Load User during app loading
+export const loadUser = () => (dispatch, getState) => {
+  const url = TOKEN_REFRESH_API;
+  const data = JSON.stringify({
+    refresh: localStorage.getItem("refresh"),
+  });
+
+  // Headers
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  if (typeof window !== undefined) {
+    axios
+      .post(url, data, config)
+      .then((res) => {
+        if (res.data && res.data.access) {
+          localStorage.setItem("access", res.data.access);
+        }
+        dispatch({
+          type: USER_LOADED,
+          payload: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log("some error in token refresh bhai", err);
+        if (err.response) {
+          dispatch({
+            type: SIGNIN_FAIL,
+            payload: err.response.data,
+          });
+        }
+      });
+  }
+};
+
 // Signin
 export const signIn = (email, password) => (dispatch) => {
   const url = SIGNIN_API;
@@ -45,22 +88,20 @@ export const signIn = (email, password) => (dispatch) => {
     },
   };
 
-  console.log(url, data);
-
   if (typeof window !== undefined) {
     axios
       .post(url, data, config)
       .then((res) => {
-        console.log(res);
-        localStorage.setItem("access", res.data.access);
-        localStorage.setItem("refresh", res.data.refresh);
+        if (res.data && res.data.access && res.data.refresh) {
+          localStorage.setItem("access", res.data.access);
+          localStorage.setItem("refresh", res.data.refresh);
+        }
         dispatch({
           type: SIGNIN_SUCCESS,
           payload: res.data,
         });
       })
       .catch((err) => {
-        console.log("some error in login bhai", err);
         if (err.response) {
           dispatch({
             type: SIGNIN_FAIL,
@@ -76,7 +117,7 @@ export const signUp = (credentials) => (dispatch) => {
   const url = SIGNUP_API;
   const data = JSON.stringify(credentials);
 
-  console.log(data)
+  console.log(data);
   // Headers
   const config = {
     headers: {
@@ -111,16 +152,14 @@ export const signOut = () => (dispatch) => {
   const url = SIGNOUT_API;
 
   if (typeof window !== undefined) {
-    const refresh_token = window.localStorage.getItem("refresh");
     const data = {
-      refresh_token,
+      refresh_token: localStorage.getItem("refresh"),
     };
 
     localStorage.clear();
 
     axios.post(url, data).then((res) => {
       console.log(res);
-      localStorage.clear();
       dispatch({
         type: SIGNOUT_SUCCESS,
       });
