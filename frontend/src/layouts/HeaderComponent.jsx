@@ -12,6 +12,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Link from "@material-ui/core/Link";
+
+import { routes } from "../Routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -130,11 +133,13 @@ export default function HeaderComponent() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
+        <Link href={routes.cart} color="inherit">
+          <IconButton aria-label="cart items" color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Link>
         <p>Cart</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
@@ -173,11 +178,13 @@ export default function HeaderComponent() {
           </div>
           <div className={classes.root} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <Link href={routes.cart} color="inherit">
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Link>
             <IconButton
               edge="end"
               aria-label="account of current user"

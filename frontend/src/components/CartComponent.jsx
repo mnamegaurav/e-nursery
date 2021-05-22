@@ -1,17 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { getCart } from "../store/actions/cart";
 
-export class CartComponent extends Component {
-  componentDidMount() {
-    this.props.getCart();
-  }
-  render() {
-    return <div>Cart</div>;
-  }
+function CartComponent(props) {
+  React.useEffect(() => {
+    props.getCart();
+  }, []);
+
+  return <div>Cart</div>;
 }
 
 CartComponent.propTypes = {

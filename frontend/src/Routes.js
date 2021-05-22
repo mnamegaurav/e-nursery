@@ -10,7 +10,7 @@ import HomeComponent from "./components/HomeComponent";
 import SignInComponent from "./components/SignInComponent";
 import SignUpComponent from "./components/SignUpComponent";
 import PageNotFoundComponent from "./layouts/PageNotFoundComponent";
-
+import CartComponent from "./components/CartComponent";
 import BaseLayout from "./layouts/BaseLayout";
 
 export const routes = {
@@ -54,6 +54,8 @@ export default function Routes() {
         <PrivateRoute path={routes.root} exact component={HomeComponent} />
         <Route path={routes.signin} exact component={SignInComponent} />
         <Route path={routes.signup} exact component={SignUpComponent} />
+        <Route path={routes.signup} exact component={SignUpComponent} />
+        <Route path={routes.cart} exact component={CartComponent} />
         <Route component={PageNotFoundComponent} />
       </Switch>
     </Router>
