@@ -3,7 +3,7 @@ import BestSellingPlantsComponent from "./BestSellingPlantsComponent";
 import AllPlantsComponent from "./AllPlantsComponent";
 import CartComponent from "./CartComponent";
 
-const HomeComponent = () => {
+export default function HomeComponent() {
   return (
     <>
       <OffersComponent />
@@ -15,6 +15,4 @@ const HomeComponent = () => {
       <CartComponent />
     </>
   );
-};
-
-export default HomeComponent;
+}

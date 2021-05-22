@@ -6,7 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  cart: [],
+  cart: {},
 };
 
 export default function cart(state = initialState, action) {
@@ -17,19 +17,15 @@ export default function cart(state = initialState, action) {
         cart: action.payload,
       };
     case ADD_CART_ITEM:
+    case REMOVE_CART_ITEM:
       return {
         ...state,
-        cart: [...state.cart, action.payload],
+        cart: { ...state.cart, ...action.payload },
       };
     case EMPTY_CART:
       return {
         ...state,
-        cart: [],
-      };
-    case REMOVE_CART_ITEM:
-      return {
-        ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
+        cart: {},
       };
     default:
       return state;

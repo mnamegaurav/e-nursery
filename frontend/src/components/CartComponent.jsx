@@ -16,7 +16,8 @@ export class CartComponent extends Component {
 
 CartComponent.propTypes = {
   // You can declare that a prop is a specific JS primitive.
-  cart: PropTypes.array,
+  cart: PropTypes.object,
+  getCart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

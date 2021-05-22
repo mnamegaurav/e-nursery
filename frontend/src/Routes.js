@@ -4,11 +4,12 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { connect } from "react-redux";
 
 import HomeComponent from "./components/HomeComponent";
 import SignInComponent from "./components/SignInComponent";
 import SignUpComponent from "./components/SignUpComponent";
-import PageNotFoundComponent from "./components/PageNotFoundComponent";
+import PageNotFoundComponent from "./layouts/PageNotFoundComponent";
 
 import BaseLayout from "./layouts/BaseLayout";
 
@@ -16,19 +17,17 @@ export const routes = {
   root: "/",
   signin: "/signin",
   signup: "/signup",
+  cart: "/cart",
 };
 
-function PrivateRoute({ component: Component, auth, ...rest }) {
-  const isLoading = auth || false;
-  const isAuthenticated = auth || true;
-
+function PrivateRouteComponent({ component: Component, auth, ...rest }) {
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isLoading) {
+        if (auth.isLoading) {
           return <h2 className="text-center mt-5">Loading...</h2>;
-        } else if (!isAuthenticated) {
+        } else if (!auth.isAuthenticated) {
           return <Redirect to={routes.signin} />;
         } else {
           return (
@@ -41,6 +40,12 @@ function PrivateRoute({ component: Component, auth, ...rest }) {
     />
   );
 }
+
+const mapStateToProps = (state) => ({
+  auth: state.authReducer,
+});
+
+const PrivateRoute = connect(mapStateToProps)(PrivateRouteComponent);
 
 export default function Routes() {
   return (

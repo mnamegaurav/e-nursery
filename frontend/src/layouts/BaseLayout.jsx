@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import HeaderComponent from "../components/HeaderComponent";
-import FooterComponent from "../components/FooterComponent";
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
