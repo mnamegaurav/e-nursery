@@ -6,10 +6,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
-    RetrieveUpdateAPIView, 
+    RetrieveUpdateAPIView,
     ListAPIView,
     CreateAPIView,
-    )
+)
 
 from accounts.permissions import IsNursery, IsOwner
 from core.models import Shop, Plant, Cart, Order
@@ -18,7 +18,7 @@ from core.serializers import (
     PlantSerializer,
     CartSerializer,
     OrderSerializer,
-    )
+)
 # Create your views here.
 
 
@@ -33,7 +33,6 @@ class CartRetrieveUpdateAPIView(RetrieveUpdateAPIView):
         return self.request.user.cart
 
 
-
 class OrdersListAPIView(ListAPIView):
     """
     /api/me/orders [GET]
@@ -45,14 +44,12 @@ class OrdersListAPIView(ListAPIView):
         return self.request.user.orders.all()
 
 
-
 class OrderCreateAPIView(CreateAPIView):
     """
     /api/me/order/create [POST]
     """
     serializer_class = OrderSerializer
     permission_classes = (IsAuthenticated,)
-
 
 
 class OrderRetrieveUpdateAPIView(RetrieveUpdateAPIView):
@@ -67,7 +64,6 @@ class OrderRetrieveUpdateAPIView(RetrieveUpdateAPIView):
         return self.request.user.orders.all()
 
 
-
 class NurseryOrdersListAPIView(ListAPIView):
     """
     /api/nursery/orders [GET]
@@ -79,7 +75,6 @@ class NurseryOrdersListAPIView(ListAPIView):
         return Order.objects.filter(plants__user=self.request.user).distinct()
 
 
-
 class ShopsListAPIView(ListAPIView):
     """
     /api/shops [GET]
@@ -89,14 +84,12 @@ class ShopsListAPIView(ListAPIView):
     queryset = Shop.objects.all()
 
 
-
 class ShopsCreateAPIView(CreateAPIView):
     """
     /api/shop/create [POST]
     """
     serializer_class = ShopSerializer
     permission_classes = (IsAuthenticated, IsNursery)
-
 
 
 class ShopRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -108,7 +101,6 @@ class ShopRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Shop.objects.all()
 
 
-
 class PlantsListAPIView(ListAPIView):
     """
     /api/plants [GET]
@@ -118,14 +110,12 @@ class PlantsListAPIView(ListAPIView):
     queryset = Plant.objects.all()
 
 
-
 class PlantsCreateAPIView(CreateAPIView):
     """
     /api/plant/create [POST]
     """
     serializer_class = PlantSerializer
     permission_classes = (IsAuthenticated, IsNursery)
-
 
 
 class PlantRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

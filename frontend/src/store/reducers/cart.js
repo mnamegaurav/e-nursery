@@ -9,7 +9,7 @@ const initialState = {
   cart: {},
 };
 
-export default function cart(state = initialState, action) {
+export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
       return {

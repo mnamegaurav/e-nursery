@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-#local imports
+# local imports
 from core.models import Shop, Plant, Cart, Order
 
 
@@ -15,20 +15,18 @@ class ShopSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'added_on', 'user',)
 
 
-
 class PlantSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    
+
     class Meta:
         model = Plant
         fields = ('id', 'name', 'price', 'image', 'shop', 'added_on', 'user')
         read_only_fields = ('id', 'added_on', 'user')
 
 
-
 class CartSerializer(serializers.ModelSerializer):
     total_price = serializers.ReadOnlyField()
-    all_plants = PlantSerializer(source='plants_set',read_only=True)
+    all_plants = PlantSerializer(source='plants_set', read_only=True)
 
     class Meta:
         model = Cart
@@ -36,15 +34,15 @@ class CartSerializer(serializers.ModelSerializer):
         read_only_fields = ('added_on', 'all_plants')
 
 
-
 class OrderSerializer(serializers.ModelSerializer):
     total_price = serializers.ReadOnlyField()
-    all_plants = PlantSerializer(source='plants_set',read_only=True)
+    all_plants = PlantSerializer(source='plants_set', read_only=True)
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Order
-        fields = ('id', 'plants', 'added_on', 'total_price', 'user', 'all_plants' , 'is_active')
+        fields = ('id', 'plants', 'added_on', 'total_price',
+                  'user', 'all_plants', 'is_active')
         read_only_fields = ('id', 'added_on', 'user', 'all_plants')
 
     # overrride the update method to change the active status of order

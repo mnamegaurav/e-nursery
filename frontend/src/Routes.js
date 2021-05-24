@@ -1,23 +1,18 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-import { connect } from "react-redux";
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import HomeComponent from "./components/HomeComponent";
-import SignInComponent from "./components/SignInComponent";
-import SignUpComponent from "./components/SignUpComponent";
-import PageNotFoundComponent from "./layouts/PageNotFoundComponent";
-import CartComponent from "./components/CartComponent";
-import BaseLayout from "./layouts/BaseLayout";
+import HomeComponent from './components/HomeComponent';
+import SignInComponent from './components/SignInComponent';
+import SignUpComponent from './components/SignUpComponent';
+import PageNotFoundComponent from './layouts/PageNotFoundComponent';
+import CartComponent from './components/CartComponent';
+import BaseLayout from './layouts/BaseLayout';
 
 export const routes = {
-  root: "/",
-  signin: "/signin",
-  signup: "/signup",
-  cart: "/cart",
+  root: '/',
+  signin: '/signin',
+  signup: '/signup',
+  cart: '/cart',
 };
 
 function PrivateRouteComponent({ component: Component, auth, ...rest }) {
@@ -42,7 +37,7 @@ function PrivateRouteComponent({ component: Component, auth, ...rest }) {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer,
+  auth: state.auth,
 });
 
 const PrivateRoute = connect(mapStateToProps)(PrivateRouteComponent);

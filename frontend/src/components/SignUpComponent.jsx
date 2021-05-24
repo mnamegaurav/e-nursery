@@ -191,13 +191,13 @@ function SignUpComponent(props) {
 
 SignUpComponent.propTypes = {
   signUp: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  isLoading: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.authReducer.isAuthenticated,
-  isLoading: state.authReducer.isLoading,
+  isAuthenticated: state.auth.isAuthenticated,
+  isLoading: state.auth.isLoading,
 });
 
 export default connect(mapStateToProps, { signUp })(SignUpComponent);

@@ -1,29 +1,31 @@
 import {
   USER_LOADING,
-  USER_LOADED,
+  USER_LOADING_SUCCESS,
+  USER_LOADING_FAIL,
   SIGNIN_SUCCESS,
   SIGNIN_FAIL,
-  SIGNOUT_SUCCESS,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  SIGNOUT_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
-  refresh: localStorage.getItem("refresh"),
-  access: localStorage.getItem("access"),
-  isAuthenticated: null,
+  refresh: localStorage.getItem("refresh") || null,
+  access: localStorage.getItem("access") || null,
+  isAuthenticated: false,
   isLoading: false,
   user: null,
 };
 
-export default function auth(state = initialState, action) {
+export default function authReducer(state = initialState, action) {
   switch (action.type) {
     case USER_LOADING:
       return {
         ...state,
         isLoading: true,
       };
-    case USER_LOADED:
+    case USER_LOADING_SUCCESS:
+      console.log('loaded with ', action.payload)
       return {
         ...state,
         isAuthenticated: true,
@@ -32,6 +34,8 @@ export default function auth(state = initialState, action) {
       };
     case SIGNIN_SUCCESS:
     case SIGNUP_SUCCESS:
+      localStorage.setItem("access", action.payload.access);
+      localStorage.setItem("refresh", action.payload.refresh);
       return {
         ...state,
         isAuthenticated: true,
@@ -41,6 +45,8 @@ export default function auth(state = initialState, action) {
     case SIGNIN_FAIL:
     case SIGNUP_FAIL:
     case SIGNOUT_SUCCESS:
+    case USER_LOADING_FAIL:
+      localStorage.clear();
       return {
         ...state,
         isAuthenticated: false,

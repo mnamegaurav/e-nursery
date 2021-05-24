@@ -25,9 +25,12 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         fields = [
             'email',
             'is_nursery',
+            'full_name',
+            'username',
             'password1',
             'password2',
         ]
+        read_only_fields = ('full_name','username',)
         extra_kwargs = {
             'password1': {'write_only': True},
             'password2': {'write_only': True},
@@ -38,11 +41,6 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         is_nursery = validated_data.get('is_nursery')
         password1 = validated_data.get('password1')
         password2 = validated_data.get('password2')
-
-        if not is_nursery:
-            raise serializers.ValidationError({
-                'is_nursery': 'is_nursery field is required'
-            })
 
         if password1==password2:
             user = User(email=email, is_nursery=is_nursery)

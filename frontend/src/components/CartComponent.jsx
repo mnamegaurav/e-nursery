@@ -15,12 +15,12 @@ function CartComponent(props) {
 
 CartComponent.propTypes = {
   // You can declare that a prop is a specific JS primitive.
-  cart: PropTypes.object,
+  cart: PropTypes.object.isRequired,
   getCart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  cart: state.cartReducer.cart,
+  cart: state.cart.cart,
 });
 
 export default connect(mapStateToProps, { getCart })(CartComponent);
