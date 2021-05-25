@@ -7,6 +7,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
   SIGNOUT_SUCCESS,
+  UNAUTHORIZED_ACCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -45,6 +46,7 @@ export default function authReducer(state = initialState, action) {
     case SIGNUP_FAIL:
     case SIGNOUT_SUCCESS:
     case USER_LOADING_FAIL:
+    case UNAUTHORIZED_ACCESS:
       localStorage.clear();
       return {
         ...state,

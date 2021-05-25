@@ -1,8 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import HomeComponent from "./components/HomeComponent";
 import SignInComponent from "./components/SignInComponent";
@@ -19,7 +15,6 @@ export const routes = {
 };
 
 export default function Routes() {
-  
   return (
     <Router>
       <Switch>
