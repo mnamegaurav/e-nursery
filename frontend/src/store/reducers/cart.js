@@ -12,6 +12,7 @@ const initialState = {
 };
 
 export default function cartReducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case GET_CART:
       return {

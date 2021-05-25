@@ -26,36 +26,21 @@ class PlantSerializer(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
     total_price = serializers.ReadOnlyField()
-    all_plants = PlantSerializer(source='plants_set', read_only=True)
 
     class Meta:
         model = Cart
-        fields = ('plants', 'added_on', 'total_price', 'all_plants')
-        read_only_fields = ('added_on', 'all_plants')
-
-    def __init__(self, *args, **kwargs):
-        """
-        Reason to override this method is to get nested serialization(read_only) 
-        for Get requests and write operations for PATCH,PUT.
-        """
-        super().__init__(*args, **kwargs)
-        request = self.context.get('request')
-        if request and request.method == 'GET':
-            self.Meta.depth = 1
-        else:
-            self.Meta.depth = 0
+        fields = ('plants', 'added_on', 'total_price',)
 
 
 class OrderSerializer(serializers.ModelSerializer):
     total_price = serializers.ReadOnlyField()
-    all_plants = PlantSerializer(source='plants_set', read_only=True)
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Order
         fields = ('id', 'plants', 'added_on', 'total_price',
-                  'user', 'all_plants', 'is_active')
-        read_only_fields = ('id', 'added_on', 'user', 'all_plants')
+                  'user', 'is_active')
+        read_only_fields = ('user',)
 
     # overrride the update method to change the active status of order
     def update(self, instance, validated_data):

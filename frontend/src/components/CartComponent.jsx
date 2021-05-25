@@ -6,12 +6,23 @@ import { connect } from "react-redux";
 import { getCart } from "../store/actions/cart";
 
 function CartComponent(props) {
-  const { getCart } = props;
+  const { getCart, cart } = props;
+  const { plants, total_price: totalPrice } = cart;
+
   React.useEffect(() => {
     getCart();
-  }, [getCart]);
+  }, []);
 
-  return <div>Cart</div>;
+  return (
+    <>
+      <div>
+        {plants.map((plant, index) => {
+          <h1 key={index}>{plant.name}</h1>;
+        })}
+        <p>{totalPrice}</p>
+      </div>
+    </>
+  );
 }
 
 CartComponent.propTypes = {

@@ -23,7 +23,7 @@ function BaseLayout(props) {
 
   React.useEffect(() => {
     getCart();
-  }, [plantsCountInCart, getCart]);
+  }, []);
 
   return (
     <div className={classes.root}>
