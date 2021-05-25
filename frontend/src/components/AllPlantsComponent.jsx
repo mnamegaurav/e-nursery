@@ -69,7 +69,7 @@ function AllPlantsComponent(props) {
                 />
                 <CardContent className={classes.cardContent}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    {plant.price} INR
+                  ₹ {plant.price}
                   </Typography>
                   <Typography>{plant.name}</Typography>
                 </CardContent>

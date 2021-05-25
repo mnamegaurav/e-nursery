@@ -9,9 +9,13 @@ import Menu from "@material-ui/core/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Link from "@material-ui/core/Link";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router";
+import { connect } from "react-redux";
 
 import { routes } from "../Routes";
+import { signOut } from "../store/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,11 +33,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function HeaderComponent(props) {
+function HeaderComponent(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const { plantsCountInCart } = props;
+  const history = useHistory();
+
+  const { signOut, plantsCountInCart } = props;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -43,17 +49,27 @@ export default function HeaderComponent(props) {
     setAnchorEl(null);
   };
 
+  const handleRouteClick = (route) => {
+    history.push(route);
+  };
+
+  const handleLogout = () => {
+    signOut()
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <Typography className={classes.title} variant="h5" noWrap>
-            <Link underline="none" href={routes.root} color="inherit">E-Nursery</Link>
+            <Link underline="none" href={routes.root} color="inherit">
+              E-Nursery
+            </Link>
           </Typography>
           <div className={classes.root} />
           <div className={classes.sectionDesktop}>
             <Link href={routes.cart} color="inherit">
-              <IconButton aria-label="show 4 new mails" color="inherit">
+              <IconButton aria-label="show cart plants" color="inherit">
                 <Badge badgeContent={plantsCountInCart} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
@@ -81,9 +97,20 @@ export default function HeaderComponent(props) {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={() => handleRouteClick(routes.profile)}>
+          Profile
+        </MenuItem>
+        <MenuItem onClick={() => handleRouteClick(routes.orders)}>
+          My Orders
+        </MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );
 }
+
+HeaderComponent.propTypes = {
+  signOut: PropTypes.func.isRequired,
+};
+
+export default connect(null, { signOut })(HeaderComponent);
