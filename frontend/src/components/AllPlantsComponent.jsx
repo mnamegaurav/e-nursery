@@ -41,7 +41,7 @@ function AllPlantsComponent(props) {
 
   React.useEffect(() => {
     getPlants();
-  }, []);
+  }, [getPlants]);
 
   const handleAddPlantToCart = (plantId) => {
     addPlantToCart(plantId);
@@ -52,7 +52,7 @@ function AllPlantsComponent(props) {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Container className={classes.cardGrid} maxWidth="md">
         {/* End hero unit */}
         <Grid container spacing={4}>
@@ -101,7 +101,7 @@ function AllPlantsComponent(props) {
           ))}
         </Grid>
       </Container>
-    </React.Fragment>
+    </>
   );
 }
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,6 +9,7 @@ import Menu from "@material-ui/core/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { routes } from "../Routes";
 
@@ -47,8 +47,8 @@ export default function HeaderComponent(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            E-Nursery
+          <Typography className={classes.title} variant="h5" noWrap>
+            <Link underline="none" href={routes.root} color="inherit">E-Nursery</Link>
           </Typography>
           <div className={classes.root} />
           <div className={classes.sectionDesktop}>

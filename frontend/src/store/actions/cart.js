@@ -5,6 +5,7 @@ import {
   GET_CART,
   ADD_PLANT_TO_CART,
   REMOVE_PLANT_FROM_CART,
+  EMPTY_CART,
   UNAUTHORIZED_ACCESS,
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
@@ -76,6 +77,28 @@ export const removePlantFromCart = (plantId) => (dispatch, getState) => {
       dispatch({
         type: REMOVE_PLANT_FROM_CART,
         payload: res.data,
+      });
+    })
+    .catch((err) => {
+      if (err.response.status === 401) {
+        dispatch({
+          type: UNAUTHORIZED_ACCESS,
+        });
+      }
+    });
+};
+
+// Empty Cart
+export const emptyCart = () => (dispatch, getState) => {
+  // GET TOKEN FROM STATE
+  const auth = getState().auth;
+  const accessToken = auth.access;
+
+  axios
+    .patch(MY_CART_API, { plants: [] }, tokenConfig(accessToken))
+    .then((res) => {
+      dispatch({
+        type: EMPTY_CART,
       });
     })
     .catch((err) => {
