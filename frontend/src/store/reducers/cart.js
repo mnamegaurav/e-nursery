@@ -7,12 +7,12 @@ import {
 
 const initialState = {
   cart: {
-    plants: []
+    plants: [], // this is the array to contain the ids of all plants in the cart
+    all_plants: [], // this is the array to contain the details of all plants in the cart
   },
 };
 
 export default function cartReducer(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case GET_CART:
       return {

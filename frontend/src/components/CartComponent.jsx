@@ -7,7 +7,7 @@ import { getCart } from "../store/actions/cart";
 
 function CartComponent(props) {
   const { getCart, cart } = props;
-  const { plants, total_price: totalPrice } = cart;
+  const { all_plants: plants, total_price: totalPrice } = cart;
 
   React.useEffect(() => {
     getCart();
@@ -16,8 +16,9 @@ function CartComponent(props) {
   return (
     <>
       <div>
+        <h2>Cart Plants</h2>
         {plants.map((plant, index) => {
-          <h1 key={index}>{plant.name}</h1>;
+          return <h1 key={index}>{plant.name}</h1>;
         })}
         <p>{totalPrice}</p>
       </div>

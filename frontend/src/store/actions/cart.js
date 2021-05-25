@@ -38,8 +38,7 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
   const auth = getState().auth;
   const accessToken = auth.access;
 
-  const plants = getState().cart.cart.plants;
-  const plantIds = plants.map((plant) => plant.id);
+  const plantIds = getState().cart.cart.plants;
 
   axios
     .patch(
@@ -69,8 +68,7 @@ export const removePlantFromCart = (plantId) => (dispatch, getState) => {
   const accessToken = auth.access;
 
   const plants = getState().cart.cart.plants;
-  const filteredPlants = plants.filter((plant) => plant.id !== plantId);
-  const plantIds = filteredPlants.map((plant)=>plant.id)
+  const plantIds = plants.filter((prevPlantId) => prevPlantId !== plantId);
 
   axios
     .patch(MY_CART_API, { plants: plantIds }, tokenConfig(accessToken))
