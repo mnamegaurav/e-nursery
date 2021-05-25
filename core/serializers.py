@@ -25,22 +25,23 @@ class PlantSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
+    all_plants = PlantSerializer(many=True, read_only=True)
     total_price = serializers.ReadOnlyField()
 
     class Meta:
         model = Cart
-        fields = ('plants', 'added_on', 'total_price',)
+        fields = ('plants', 'added_on', 'total_price', 'all_plants')
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    all_plants = PlantSerializer(many=True, read_only=True)
     total_price = serializers.ReadOnlyField()
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Order
-        fields = ('id', 'plants', 'added_on', 'total_price',
-                  'user', 'is_active')
-        read_only_fields = ('user',)
+        fields = ('id', 'plants', 'added_on',
+                  'total_price', 'user', 'is_active', 'all_plants')
 
     # overrride the update method to change the active status of order
     def update(self, instance, validated_data):
