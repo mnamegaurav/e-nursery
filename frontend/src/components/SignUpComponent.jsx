@@ -182,7 +182,12 @@ function SignUpComponent(props) {
               </Button>
               <Grid container justify="flex-end">
                 <Grid item>
-                  <Link onClick={()=>handleRouteClick(routes.signin)} variant="body2" component="button"  variant="body2" color="secondary">
+                  <Link
+                    onClick={() => handleRouteClick(routes.signin)}
+                    variant="body2"
+                    component="button"
+                    color="secondary"
+                  >
                     Already have an account? Sign in
                   </Link>
                 </Grid>

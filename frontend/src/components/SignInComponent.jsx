@@ -144,12 +144,22 @@ function SignInComponent(props) {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link onClick={()=>handleRouteClick(routes.signup)} variant="body2" component="button" color="secondary">
+                  <Link
+                    onClick={() => handleRouteClick(routes.signup)}
+                    variant="body2"
+                    component="button"
+                    color="secondary"
+                  >
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link onClick={()=>handleRouteClick(routes.signup)} variant="body2" component="button" color="secondary">
+                  <Link
+                    onClick={() => handleRouteClick(routes.signup)}
+                    variant="body2"
+                    component="button"
+                    color="secondary"
+                  >
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

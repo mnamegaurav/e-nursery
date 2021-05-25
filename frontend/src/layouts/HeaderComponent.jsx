@@ -73,7 +73,11 @@ function HeaderComponent(props) {
           </Typography>
           <div className={classes.root} />
           <div className={classes.sectionDesktop}>
-            <Link component="button" onClick={() => handleRouteClick(routes.cart)} color="inherit">
+            <Link
+              component="button"
+              onClick={() => handleRouteClick(routes.cart)}
+              color="inherit"
+            >
               <IconButton aria-label="show cart plants" color="inherit">
                 <Badge badgeContent={plantsCountInCart} color="secondary">
                   <ShoppingCartIcon />
