@@ -2,7 +2,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
 
-from core.models import Shop, Cart
+from core.models import Cart
 
 User = get_user_model()
 

@@ -32,6 +32,7 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('plants', 'added_on', 'total_price', 'all_plants')
         read_only_fields = ('added_on', 'all_plants')
+        # depth = 1
 
 
 class OrderSerializer(serializers.ModelSerializer):

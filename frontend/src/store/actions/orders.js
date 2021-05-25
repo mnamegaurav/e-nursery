@@ -1,25 +1,25 @@
 import axios from "axios";
 
-import { MY_CART_API } from "../../api";
+import { MY_ORDERS_LIST_API, ORDER_API, ORDER_CREATE_API } from "../../api";
 import {
-  GET_CART,
-  ADD_PLANT_TO_CART,
-  REMOVE_PLANT_FROM_CART,
+  GET_ORDERS,
+  CREATE_ORDER,
+  CANCEL_ORDER,
   UNAUTHORIZED_ACCESS,
 } from "../actions/types";
-import { tokenConfig } from "../../utils";
+import { tokenConfig } from "./auth";
 
-// Get Cart
-export const getCart = () => (dispatch, getState) => {
+// Get Orders List
+export const getOrders = () => (dispatch, getState) => {
   // GET TOKEN FROM STATE
   const auth = getState().auth;
   const accessToken = auth.access;
 
   axios
-    .get(MY_CART_API, tokenConfig(accessToken))
+    .get(MY_ORDERS_LIST_API, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
-        type: GET_CART,
+        type: GET_ORDERS,
         payload: res.data,
       });
     })
@@ -32,23 +32,18 @@ export const getCart = () => (dispatch, getState) => {
     });
 };
 
-// Add Plant Cart
-export const addPlantToCart = (plantId) => (dispatch, getState) => {
+// Order Cancel API
+export const cancelOrder = () => (dispatch, getState) => {
   // GET TOKEN FROM STATE
   const auth = getState().auth;
-  const plants = getState().cart.cart.plants;
   const accessToken = auth.access;
 
   axios
-    .patch(
-      MY_CART_API,
-      { plants: [...plants, plantId] },
-      tokenConfig(accessToken)
-    )
+    .get(ORDER_API, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
-        type: ADD_PLANT_TO_CART,
-        payload: res.data,
+        type: CANCEL_ORDER,
+        payload: res.data.id,
       });
     })
     .catch((err) => {
@@ -60,22 +55,17 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
     });
 };
 
-// Remove Plant fROM Cart
-export const removePlantFromCart = (plantId) => (dispatch, getState) => {
+// Order Create API
+export const createOrder = () => (dispatch, getState) => {
   // GET TOKEN FROM STATE
   const auth = getState().auth;
-  const plants = getState().cart.cart.plants;
   const accessToken = auth.access;
 
   axios
-    .patch(
-      MY_CART_API,
-      { plants: plants.filter((plant) => plant !== plantId) },
-      tokenConfig(accessToken)
-    )
+    .get(ORDER_CREATE_API, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
-        type: REMOVE_PLANT_FROM_CART,
+        type: CREATE_ORDER,
         payload: res.data,
       });
     })

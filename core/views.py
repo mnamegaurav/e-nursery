@@ -1,8 +1,7 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
+# from rest_framework import viewsets, status
+# from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
@@ -12,7 +11,7 @@ from rest_framework.generics import (
 )
 
 from accounts.permissions import IsNursery, IsOwner
-from core.models import Shop, Plant, Cart, Order
+from core.models import Shop, Plant, Order
 from core.serializers import (
     ShopSerializer,
     PlantSerializer,

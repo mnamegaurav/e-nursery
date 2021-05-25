@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import Routes from "./Routes";
 import store from "./store";
 import { theme } from "./layouts/theme";
-import { loadUser } from "./store/actions/auth";
 
 function App() {
   return (

@@ -1,12 +1,14 @@
 import {
   GET_CART,
-  ADD_CART_ITEM,
+  ADD_PLANT_TO_CART,
+  REMOVE_PLANT_FROM_CART,
   EMPTY_CART,
-  REMOVE_CART_ITEM,
 } from "../actions/types";
 
 const initialState = {
-  cart: {},
+  cart: {
+    plants: []
+  },
 };
 
 export default function cartReducer(state = initialState, action) {
@@ -16,8 +18,8 @@ export default function cartReducer(state = initialState, action) {
         ...state,
         cart: action.payload,
       };
-    case ADD_CART_ITEM:
-    case REMOVE_CART_ITEM:
+    case ADD_PLANT_TO_CART:
+    case REMOVE_PLANT_FROM_CART:
       return {
         ...state,
         cart: { ...state.cart, ...action.payload },

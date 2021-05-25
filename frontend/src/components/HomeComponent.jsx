@@ -6,11 +6,8 @@ export default function HomeComponent() {
   return (
     <>
       <OffersComponent />
-
-      <BestSellingPlantsComponent />
-
       <AllPlantsComponent />
-
+      <BestSellingPlantsComponent />
     </>
   );
 }

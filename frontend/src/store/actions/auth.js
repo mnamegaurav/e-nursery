@@ -16,22 +16,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
 } from "../actions/types";
-
-// Setup config with token - helper function
-export const tokenConfig = (accessToken) => {
-  // Headers
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  // if token add it to headers
-  if (accessToken) {
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-  return config;
-};
+import { tokenConfig } from "../../utils";
 
 // Load User during app loading
 export const loadUser = () => (dispatch, getState) => {

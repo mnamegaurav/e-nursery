@@ -7,7 +7,13 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+
+import { getPlants } from "../store/actions/plants";
+import { addPlantToCart, removePlantFromCart } from "../store/actions/cart";
+import NoImage from "../assets/img/oops-no-image.jpg";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -27,10 +33,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6];
-
-export default function AllPlantsComponent() {
+function AllPlantsComponent(props) {
   const classes = useStyles();
+
+  const { plants, cartPlants, getPlants, addPlantToCart, removePlantFromCart } =
+    props;
+
+  React.useEffect(() => {
+    getPlants();
+  }, []);
+
+  const handleAddPlantToCart = (plantId) => {
+    addPlantToCart(plantId);
+  };
+
+  const handleRemovePlantFromCart = (plantId) => {
+    removePlantFromCart(plantId);
+  };
 
   return (
     <React.Fragment>
@@ -40,30 +59,42 @@ export default function AllPlantsComponent() {
           <Grid item xs={12}>
             <Typography variant="h5">All Plants</Typography>
           </Grid>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4}>
+          {plants.map((plant, index) => (
+            <Grid item key={index} xs={12} sm={6} md={4}>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
-                  image="https://source.unsplash.com/random"
+                  image={plant.image || NoImage}
                   title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Heading
+                    {plant.price} INR
                   </Typography>
-                  <Typography>
-                    This is a media card. You can use this section to describe
-                    the content.
-                  </Typography>
+                  <Typography>{plant.name}</Typography>
                 </CardContent>
                 <CardActions>
-                <Button size="small" color="secondary">
+                  <Button size="small" color="secondary">
                     Details
                   </Button>
-                  <Button size="small" color="secondary">
-                    Add to Cart
-                  </Button>
+
+                  {cartPlants.includes(plant.id) ? (
+                    <Button
+                      size="small"
+                      color="secondary"
+                      onClick={() => handleRemovePlantFromCart(plant.id)}
+                    >
+                      Remove from Cart
+                    </Button>
+                  ) : (
+                    <Button
+                      size="small"
+                      color="secondary"
+                      onClick={() => handleAddPlantToCart(plant.id)}
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
             </Grid>
@@ -73,3 +104,21 @@ export default function AllPlantsComponent() {
     </React.Fragment>
   );
 }
+
+AllPlantsComponent.propTypes = {
+  plants: PropTypes.array.isRequired,
+  cartPlants: PropTypes.array.isRequired,
+  addPlantToCart: PropTypes.func.isRequired,
+  removePlantFromCart: PropTypes.func.isRequired,
+};
+
+const matpStateToProps = (state) => ({
+  plants: state.plants.plants,
+  cartPlants: state.cart.cart.plants,
+});
+
+export default connect(matpStateToProps, {
+  getPlants,
+  addPlantToCart,
+  removePlantFromCart,
+})(AllPlantsComponent);
