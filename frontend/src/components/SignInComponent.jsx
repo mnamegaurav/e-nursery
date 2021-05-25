@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import Copyright from "../layouts/Copyright";
@@ -59,6 +59,8 @@ const initialCredentials = {
 function SignInComponent(props) {
   const classes = useStyles();
 
+  const history = useHistory();
+
   const [crendentials, setCrendentials] = React.useState(initialCredentials);
   const { isAuthenticated, isLoading, signIn } = props;
 
@@ -80,6 +82,10 @@ function SignInComponent(props) {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleRouteClick = (route) => {
+    history.push(route);
   };
 
   return (
@@ -138,12 +144,12 @@ function SignInComponent(props) {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href={routes.signup} variant="body2" color="secondary">
+                  <Link onClick={()=>handleRouteClick(routes.signup)} variant="body2" component="button" color="secondary">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href={routes.signup} variant="body2" color="secondary">
+                  <Link onClick={()=>handleRouteClick(routes.signup)} variant="body2" component="button" color="secondary">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

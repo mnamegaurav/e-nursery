@@ -54,7 +54,7 @@ function HeaderComponent(props) {
   };
 
   const handleLogout = () => {
-    signOut()
+    signOut();
   };
 
   return (
@@ -62,13 +62,18 @@ function HeaderComponent(props) {
       <AppBar position="static">
         <Toolbar>
           <Typography className={classes.title} variant="h5" noWrap>
-            <Link underline="none" href={routes.root} color="inherit">
+            <Link
+              underline="none"
+              href="#"
+              onClick={() => handleRouteClick(routes.root)}
+              color="inherit"
+            >
               E-Nursery
             </Link>
           </Typography>
           <div className={classes.root} />
           <div className={classes.sectionDesktop}>
-            <Link href={routes.cart} color="inherit">
+            <Link component="button" onClick={() => handleRouteClick(routes.cart)} color="inherit">
               <IconButton aria-label="show cart plants" color="inherit">
                 <Badge badgeContent={plantsCountInCart} color="secondary">
                   <ShoppingCartIcon />

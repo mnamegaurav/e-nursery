@@ -9,10 +9,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
+import { Redirect, useHistory } from "react-router-dom";
 
 import SignInImage from "../assets/img/signin.jpg";
 import { signUp } from "../store/actions/auth";
@@ -61,6 +61,8 @@ const initialCredentials = {
 function SignUpComponent(props) {
   const classes = useStyles();
 
+  const history = useHistory();
+
   const [crendentials, setCrendentials] = React.useState(initialCredentials);
   const { isAuthenticated, isLoading, signUp } = props;
 
@@ -89,6 +91,10 @@ function SignUpComponent(props) {
       ...prevState,
       [e.target.name]: e.target.checked,
     }));
+  };
+
+  const handleRouteClick = (route) => {
+    history.push(route);
   };
 
   return (
@@ -176,7 +182,7 @@ function SignUpComponent(props) {
               </Button>
               <Grid container justify="flex-end">
                 <Grid item>
-                  <Link href={routes.signin} variant="body2" color="secondary">
+                  <Link onClick={()=>handleRouteClick(routes.signin)} variant="body2" component="button"  variant="body2" color="secondary">
                     Already have an account? Sign in
                   </Link>
                 </Grid>
