@@ -32,7 +32,18 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('plants', 'added_on', 'total_price', 'all_plants')
         read_only_fields = ('added_on', 'all_plants')
-        # depth = 1
+
+    def __init__(self, *args, **kwargs):
+        """
+        Reason to override this method is to get nested serialization(read_only) 
+        for Get requests and write operations for PATCH,PUT.
+        """
+        super().__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method == 'GET':
+            self.Meta.depth = 1
+        else:
+            self.Meta.depth = 0
 
 
 class OrderSerializer(serializers.ModelSerializer):

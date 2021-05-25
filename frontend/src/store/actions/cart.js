@@ -36,13 +36,15 @@ export const getCart = () => (dispatch, getState) => {
 export const addPlantToCart = (plantId) => (dispatch, getState) => {
   // GET TOKEN FROM STATE
   const auth = getState().auth;
-  const plants = getState().cart.cart.plants;
   const accessToken = auth.access;
+
+  const plants = getState().cart.cart.plants;
+  const plantIds = plants.map((plant) => plant.id);
 
   axios
     .patch(
       MY_CART_API,
-      { plants: [...plants, plantId] },
+      { plants: [...plantIds, plantId] },
       tokenConfig(accessToken)
     )
     .then((res) => {
@@ -64,15 +66,14 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
 export const removePlantFromCart = (plantId) => (dispatch, getState) => {
   // GET TOKEN FROM STATE
   const auth = getState().auth;
-  const plants = getState().cart.cart.plants;
   const accessToken = auth.access;
 
+  const plants = getState().cart.cart.plants;
+  const filteredPlants = plants.filter((plant) => plant.id !== plantId);
+  const plantIds = filteredPlants.map((plant)=>plant.id)
+
   axios
-    .patch(
-      MY_CART_API,
-      { plants: plants.filter((plant) => plant !== plantId) },
-      tokenConfig(accessToken)
-    )
+    .patch(MY_CART_API, { plants: plantIds }, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
         type: REMOVE_PLANT_FROM_CART,

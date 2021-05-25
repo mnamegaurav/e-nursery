@@ -1,6 +1,5 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-
 import { makeStyles } from "@material-ui/core/styles";
 
 import Copyright from "./Copyright";
@@ -19,7 +18,7 @@ export default function FooterComponent() {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          E-Nursery
         </Typography>
         <Typography
           variant="subtitle1"
@@ -27,7 +26,7 @@ export default function FooterComponent() {
           color="textSecondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Made with ❤️ by Gaurav Sharma
         </Typography>
         <Copyright />
       </footer>

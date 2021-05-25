@@ -114,7 +114,7 @@ AllPlantsComponent.propTypes = {
 
 const matpStateToProps = (state) => ({
   plants: state.plants.plants,
-  cartPlants: state.cart.cart.plants,
+  cartPlants: state.cart.cart.plants.map((plant) => plant.id),
 });
 
 export default connect(matpStateToProps, {
