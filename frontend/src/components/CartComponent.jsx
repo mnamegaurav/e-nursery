@@ -6,9 +6,10 @@ import { connect } from "react-redux";
 import { getCart } from "../store/actions/cart";
 
 function CartComponent(props) {
+  const { getCart } = props;
   React.useEffect(() => {
-    props.getCart();
-  }, []);
+    getCart();
+  }, [getCart]);
 
   return <div>Cart</div>;
 }

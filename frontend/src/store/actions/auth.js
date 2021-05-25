@@ -35,28 +35,29 @@ export const tokenConfig = (accessToken) => {
 
 // Load User during app loading
 export const loadUser = () => (dispatch, getState) => {
-  // USER LOADING
-  dispatch({
-    type: USER_LOADING,
-  });
-
   // GET TOKEN FROM STATE
-  const accessToken = getState().auth.access;
+  const auth = getState().auth;
+  const accessToken = auth.access;
 
-  axios
-    .get(USER_DETAIL_API, tokenConfig(accessToken))
-    .then((res) => {
-      dispatch({
-        type: USER_LOADING_SUCCESS,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch({
-        type: USER_LOADING_FAIL,
-      });
+  if (accessToken) {
+    // USER LOADING
+    dispatch({
+      type: USER_LOADING,
     });
+    axios
+      .get(USER_DETAIL_API, tokenConfig(accessToken))
+      .then((res) => {
+        dispatch({
+          type: USER_LOADING_SUCCESS,
+          payload: res.data,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: USER_LOADING_FAIL,
+        });
+      });
+  }
 };
 
 // Signin

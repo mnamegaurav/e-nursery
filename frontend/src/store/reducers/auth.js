@@ -25,7 +25,6 @@ export default function authReducer(state = initialState, action) {
         isLoading: true,
       };
     case USER_LOADING_SUCCESS:
-      console.log('loaded with ', action.payload)
       return {
         ...state,
         isAuthenticated: true,
