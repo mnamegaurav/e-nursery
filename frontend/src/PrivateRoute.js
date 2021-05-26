@@ -2,6 +2,7 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import BaseLayout from "./layouts/BaseLayout";
+import UiLoadingComponent from "./layouts/UiLoadingComponent";
 import { routes } from "./Routes";
 
 function PrivateRoute({ component: Component, auth, ...rest }) {
@@ -10,7 +11,7 @@ function PrivateRoute({ component: Component, auth, ...rest }) {
       {...rest}
       render={(props) => {
         if (auth.isLoading) {
-          return <h2 className="text-center mt-5">Loading...</h2>;
+          return <UiLoadingComponent />;
         } else if (!auth.isAuthenticated) {
           return <Redirect to={routes.signin} />;
         } else {

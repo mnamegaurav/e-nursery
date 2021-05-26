@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
+  navLogo: {
+    fontSize: theme.typography.h5.fontSize,
+  },
 }));
 
 function HeaderComponent(props) {
@@ -64,7 +67,8 @@ function HeaderComponent(props) {
           <Typography className={classes.title} variant="h5" noWrap>
             <Link
               underline="none"
-              href="#"
+              component="button"
+              className={classes.navLogo}
               onClick={() => handleRouteClick(routes.root)}
               color="inherit"
             >
@@ -74,7 +78,7 @@ function HeaderComponent(props) {
           <div className={classes.root} />
           <div className={classes.sectionDesktop}>
             <Link
-              component="button"
+              component="a"
               onClick={() => handleRouteClick(routes.cart)}
               color="inherit"
             >
@@ -97,6 +101,7 @@ function HeaderComponent(props) {
           </div>
         </Toolbar>
       </AppBar>
+
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}

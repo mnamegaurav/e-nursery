@@ -6,6 +6,8 @@ import {
   ADD_PLANT_TO_CART,
   REMOVE_PLANT_FROM_CART,
   EMPTY_CART,
+  UI_LOADING_START,
+  UI_LOADING_END,
   UNAUTHORIZED_ACCESS,
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
@@ -16,12 +18,21 @@ export const getCart = () => (dispatch, getState) => {
   const auth = getState().auth;
   const accessToken = auth.access;
 
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
+
   axios
     .get(MY_CART_API, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
         type: GET_CART,
         payload: res.data,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     })
     .catch((err) => {
@@ -30,6 +41,10 @@ export const getCart = () => (dispatch, getState) => {
           type: UNAUTHORIZED_ACCESS,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
 
@@ -41,6 +56,10 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
 
   const plantIds = getState().cart.cart.plants;
 
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .patch(
       MY_CART_API,
@@ -52,6 +71,10 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
         type: ADD_PLANT_TO_CART,
         payload: res.data,
       });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     })
     .catch((err) => {
       if (err.response.status === 401) {
@@ -59,6 +82,10 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
           type: UNAUTHORIZED_ACCESS,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
 
@@ -71,12 +98,20 @@ export const removePlantFromCart = (plantId) => (dispatch, getState) => {
   const plants = getState().cart.cart.plants;
   const plantIds = plants.filter((prevPlantId) => prevPlantId !== plantId);
 
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .patch(MY_CART_API, { plants: plantIds }, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
         type: REMOVE_PLANT_FROM_CART,
         payload: res.data,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     })
     .catch((err) => {
@@ -85,6 +120,10 @@ export const removePlantFromCart = (plantId) => (dispatch, getState) => {
           type: UNAUTHORIZED_ACCESS,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
 
@@ -94,11 +133,19 @@ export const emptyCart = () => (dispatch, getState) => {
   const auth = getState().auth;
   const accessToken = auth.access;
 
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .patch(MY_CART_API, { plants: [] }, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
         type: EMPTY_CART,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     })
     .catch((err) => {
@@ -107,5 +154,9 @@ export const emptyCart = () => (dispatch, getState) => {
           type: UNAUTHORIZED_ACCESS,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };

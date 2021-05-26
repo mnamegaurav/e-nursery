@@ -8,10 +8,11 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import Copyright from "../layouts/Copyright";
 import SignInImage from "../assets/img/signin.jpg";
@@ -62,7 +63,7 @@ function SignInComponent(props) {
   const history = useHistory();
 
   const [crendentials, setCrendentials] = React.useState(initialCredentials);
-  const { isAuthenticated, isLoading, signIn } = props;
+  const { isAuthenticated, isUiLoading, signIn } = props;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -137,8 +138,9 @@ function SignInComponent(props) {
                 fullWidth
                 variant="contained"
                 color="secondary"
-                disabled={isLoading}
+                disabled={isUiLoading}
                 className={classes.submit}
+                endIcon={isUiLoading && <CircularProgress size={20}/>}
               >
                 Sign In
               </Button>
@@ -178,12 +180,12 @@ function SignInComponent(props) {
 SignInComponent.propTypes = {
   signIn: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  isUiLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isLoading: state.auth.isLoading,
+  isUiLoading: state.ui.isUiLoading,
 });
 
 export default connect(mapStateToProps, { signIn })(SignInComponent);

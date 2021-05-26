@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -64,7 +65,7 @@ function SignUpComponent(props) {
   const history = useHistory();
 
   const [crendentials, setCrendentials] = React.useState(initialCredentials);
-  const { isAuthenticated, isLoading, signUp } = props;
+  const { isAuthenticated, isUiLoading, signUp } = props;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -175,8 +176,9 @@ function SignUpComponent(props) {
                 fullWidth
                 variant="contained"
                 color="secondary"
-                disabled={isLoading}
+                disabled={isUiLoading}
                 className={classes.submit}
+                endIcon={isUiLoading && <CircularProgress size={20}/>}
               >
                 Sign Up
               </Button>
@@ -203,12 +205,12 @@ function SignUpComponent(props) {
 SignUpComponent.propTypes = {
   signUp: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  isUiLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isLoading: state.auth.isLoading,
+  isUiLoading: state.ui.isUiLoading,
 });
 
 export default connect(mapStateToProps, { signUp })(SignUpComponent);

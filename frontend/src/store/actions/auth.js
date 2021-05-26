@@ -15,6 +15,8 @@ import {
   SIGNOUT_SUCCESS,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  UI_LOADING_START,
+  UI_LOADING_END,
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
 
@@ -25,6 +27,10 @@ export const loadUser = () => (dispatch, getState) => {
   const accessToken = auth.access;
 
   if (accessToken) {
+    // Start Loading the UI
+    dispatch({
+      type: UI_LOADING_START,
+    });
     // USER LOADING
     dispatch({
       type: USER_LOADING,
@@ -36,10 +42,18 @@ export const loadUser = () => (dispatch, getState) => {
           type: USER_LOADING_SUCCESS,
           payload: res.data,
         });
+        // End Loading the UI
+        dispatch({
+          type: UI_LOADING_END,
+        });
       })
       .catch((err) => {
         dispatch({
           type: USER_LOADING_FAIL,
+        });
+        // End Loading the UI
+        dispatch({
+          type: UI_LOADING_END,
         });
       });
   }
@@ -47,6 +61,10 @@ export const loadUser = () => (dispatch, getState) => {
 
 // Signin
 export const signIn = (email, password) => (dispatch) => {
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .post(
       SIGNIN_API,
@@ -67,6 +85,10 @@ export const signIn = (email, password) => (dispatch) => {
           payload: res.data,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     })
     .catch((err) => {
       if (err.response) {
@@ -74,11 +96,19 @@ export const signIn = (email, password) => (dispatch) => {
           type: SIGNIN_FAIL,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
 
 // Signup
 export const signUp = (credentials) => (dispatch) => {
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .post(SIGNUP_API, JSON.stringify(credentials), {
       headers: {
@@ -92,6 +122,10 @@ export const signUp = (credentials) => (dispatch) => {
           payload: res.data,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     })
     .catch((err) => {
       if (err.response) {
@@ -99,11 +133,19 @@ export const signUp = (credentials) => (dispatch) => {
           type: SIGNUP_FAIL,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
 
 // Signout
 export const signOut = () => (dispatch, getState) => {
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .post(SIGNOUT_API, {
       refresh_token: getState().auth.refresh,
@@ -111,6 +153,10 @@ export const signOut = () => (dispatch, getState) => {
     .then((res) => {
       dispatch({
         type: SIGNOUT_SUCCESS,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     });
 };

@@ -5,6 +5,8 @@ import {
   GET_ORDERS,
   CREATE_ORDER,
   CANCEL_ORDER,
+  UI_LOADING_START,
+  UI_LOADING_END,
   UNAUTHORIZED_ACCESS,
 } from "../actions/types";
 import { tokenConfig } from "./auth";
@@ -15,12 +17,20 @@ export const getOrders = () => (dispatch, getState) => {
   const auth = getState().auth;
   const accessToken = auth.access;
 
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .get(MY_ORDERS_LIST_API, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
         type: GET_ORDERS,
         payload: res.data,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     })
     .catch((err) => {
@@ -29,6 +39,10 @@ export const getOrders = () => (dispatch, getState) => {
           type: UNAUTHORIZED_ACCESS,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
 
@@ -38,12 +52,20 @@ export const cancelOrder = () => (dispatch, getState) => {
   const auth = getState().auth;
   const accessToken = auth.access;
 
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .get(ORDER_API, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
         type: CANCEL_ORDER,
         payload: res.data.id,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     })
     .catch((err) => {
@@ -52,6 +74,10 @@ export const cancelOrder = () => (dispatch, getState) => {
           type: UNAUTHORIZED_ACCESS,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
 
@@ -61,12 +87,20 @@ export const createOrder = () => (dispatch, getState) => {
   const auth = getState().auth;
   const accessToken = auth.access;
 
+  // Start Loading the UI
+  dispatch({
+    type: UI_LOADING_START,
+  });
   axios
     .get(ORDER_CREATE_API, tokenConfig(accessToken))
     .then((res) => {
       dispatch({
         type: CREATE_ORDER,
         payload: res.data,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     })
     .catch((err) => {
@@ -75,5 +109,9 @@ export const createOrder = () => (dispatch, getState) => {
           type: UNAUTHORIZED_ACCESS,
         });
       }
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
+      });
     });
 };
