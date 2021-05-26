@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,7 +69,7 @@ ROOT_URLCONF = 'nursery.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'templates',],
+        'DIRS': [BASE_DIR / 'templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,13 +133,6 @@ AUTH_USER_MODEL = 'accounts.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "django_cache_table",
-    }
-}
-
 # Django Rest Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -158,8 +152,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1440),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
 # Other Settings and Configs
@@ -175,16 +169,9 @@ if DEBUG:
         }
     }
 
-    MIDDLEWARE.extend(
-        [
-            "debug_toolbar.middleware.DebugToolbarMiddleware",
-        ]
-    )
-
     INSTALLED_APPS.extend(
         [
             "django_extensions",
-            "debug_toolbar",
         ]
     )
 
@@ -194,7 +181,8 @@ If you are running locally-
     1. Create a 'local_settings.py' in the same location of 'settings.py'
     2. Write 'DEBUG=True' in the 'local_settings.py' file.
 """
-try:
-    from nursery.local_settings import *
-except ImportError as e:
-    from nursery.prod_settings import *
+# try:
+#     from nursery.local_settings import *
+# except ImportError as e:
+
+from nursery.prod_settings import *
