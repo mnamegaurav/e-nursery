@@ -181,8 +181,7 @@ If you are running locally-
     1. Create a 'local_settings.py' in the same location of 'settings.py'
     2. Write 'DEBUG=True' in the 'local_settings.py' file.
 """
-# try:
-#     from nursery.local_settings import *
-# except ImportError as e:
-
-from nursery.prod_settings import *
+try:
+    from nursery.local_settings import *
+except ImportError as e:
+    from nursery.prod_settings import *
