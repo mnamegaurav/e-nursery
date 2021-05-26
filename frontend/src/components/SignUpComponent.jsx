@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -178,7 +178,7 @@ function SignUpComponent(props) {
                 color="secondary"
                 disabled={isUiLoading}
                 className={classes.submit}
-                endIcon={isUiLoading && <CircularProgress size={20}/>}
+                endIcon={isUiLoading && <CircularProgress size={20} />}
               >
                 Sign Up
               </Button>

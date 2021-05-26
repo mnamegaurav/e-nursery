@@ -17,7 +17,7 @@ export default function UiLoadingComponent() {
 
   return (
     <div className={classes.root}>
-      <CircularProgress color="secondary" size={100}/>
+      <CircularProgress color="secondary" size={100} />
     </div>
   );
 }
