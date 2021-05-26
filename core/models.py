@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.functional import cached_property
 
+import uuid
+
 from core.utils import total_price_calculator
 
 User = get_user_model()
@@ -51,6 +53,7 @@ class Cart(models.Model):
 
 
 class Order(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     plants = models.ManyToManyField(
         Plant, related_name='order_plants', blank=True)
     added_on = models.DateTimeField(auto_now_add=True)

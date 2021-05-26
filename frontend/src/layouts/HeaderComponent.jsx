@@ -44,7 +44,7 @@ function HeaderComponent(props) {
 
   const { signOut, plantsCountInCart } = props;
 
-  const handleProfileMenuOpen = (event) => {
+  const handleAccountMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -93,7 +93,7 @@ function HeaderComponent(props) {
               aria-label="account of current user"
               aria-controls="primary-search-account-menu"
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={handleAccountMenuOpen}
               color="inherit"
             >
               <AccountCircle />
@@ -111,11 +111,8 @@ function HeaderComponent(props) {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={() => handleRouteClick(routes.profile)}>
-          Profile
-        </MenuItem>
-        <MenuItem onClick={() => handleRouteClick(routes.orders)}>
-          My Orders
+        <MenuItem onClick={() => handleRouteClick(routes.account)}>
+          My Account
         </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>

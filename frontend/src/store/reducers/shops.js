@@ -1,7 +1,7 @@
 import { GET_SHOPS } from "../actions/types";
 
 const initialState = {
-  SHOPS: [],
+  shops: [],
 };
 
 export default function shopsReducer(state = initialState, action) {
