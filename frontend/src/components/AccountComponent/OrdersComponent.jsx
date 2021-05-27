@@ -10,8 +10,6 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import red from "@material-ui/core/colors/red";
-import green from "@material-ui/core/colors/green";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 
@@ -30,76 +28,80 @@ function OrdersComponent(props) {
   };
 
   const renderSingleOrder = (plants) => {
-    return plants.map((plant, index) => {
-      return (
-        <div key={index}>
-          <div className={classes.cardRow}>
-            <img
-              className={classes.cardImage}
-              src={plant.image || NoImage}
-              alt="Plant"
-            />
-            <div className={classes.plantDetail}>
-              <Typography variant="h6">{plant.name}</Typography>
-              <Typography variant="h5">₹ {plant.price}</Typography>
+    return plants
+      .map((plant, index) => {
+        return (
+          <div key={index}>
+            <div className={classes.cardRow}>
+              <img
+                className={classes.cardImage}
+                src={plant.image || NoImage}
+                alt="Plant"
+              />
+              <div className={classes.plantDetail}>
+                <Typography variant="h6">{plant.name}</Typography>
+                <Typography variant="h5">₹ {plant.price}</Typography>
+              </div>
             </div>
+            <Divider />
           </div>
-          <Divider />
-        </div>
-      );
-    });
+        );
+      })
+      .reverse();
   };
 
   const renderOrders = () => {
-    return orders.map((order, index) => {
-      return (
-        <div key={index}>
-          <Accordion defaultExpanded className={classes.orderAccordian}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1c-content"
-              id="panel1c-header"
-            >
-              <div>
-                <Typography variant="body2" color="textSecondary">
-                  Order ID - {order.id}
-                </Typography>
-                <Typography variant="h5">{order.name}</Typography>
-                <Typography variant="h4">₹ {order.total_price}</Typography>
-                {order.is_active ? (
-                  <Typography variant="h6" color="textSecondary">
-                    On its Way
+    return orders
+      .map((order, index) => {
+        return (
+          <div key={index}>
+            <Accordion defaultExpanded className={classes.orderAccordian}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1c-content"
+                id="panel1c-header"
+              >
+                <div>
+                  <Typography variant="body2" color="textSecondary">
+                    Order ID - {order.id}
                   </Typography>
-                ) : (
-                  <Typography variant="h6" color="error">
-                    Cancelled
+                  <Typography variant="h5">{order.name}</Typography>
+                  <Typography variant="h4">₹ {order.total_price}</Typography>
+                  {order.is_active ? (
+                    <Typography variant="h6" color="textSecondary">
+                      On its Way
+                    </Typography>
+                  ) : (
+                    <Typography variant="h6" color="error">
+                      Cancelled
+                    </Typography>
+                  )}
+                  <Typography variant="body2" color="textSecondary">
+                    {new Date(order.added_on).toLocaleString()}
                   </Typography>
-                )}
-                <Typography variant="body2" color="textSecondary">
-                  {new Date(order.added_on).toLocaleString()}
-                </Typography>
-              </div>
-            </AccordionSummary>
-            <AccordionDetails className={classes.cardContent}>
-              {renderSingleOrder(order.all_plants)}
-            </AccordionDetails>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails className={classes.cardContent}>
+                {renderSingleOrder(order.all_plants)}
+              </AccordionDetails>
+              <Divider />
+              {order.is_active && (
+                <AccordionActions>
+                  <Button
+                    size="small"
+                    color="secondary"
+                    onClick={() => handleCancelOrder(order.id)}
+                  >
+                    Request Cancellation
+                  </Button>
+                </AccordionActions>
+              )}
+            </Accordion>
             <Divider />
-            {order.is_active && (
-              <AccordionActions>
-                <Button
-                  size="small"
-                  color="secondary"
-                  onClick={() => handleCancelOrder(order.id)}
-                >
-                  Request Cancellation
-                </Button>
-              </AccordionActions>
-            )}
-          </Accordion>
-          <Divider />
-        </div>
-      );
-    });
+          </div>
+        );
+      })
+      .reverse();
   };
 
   return (

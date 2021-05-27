@@ -86,7 +86,7 @@ export const cancelOrder = (orderId) => (dispatch, getState) => {
 };
 
 // Order Create API
-export const createOrder = (orderDetails) => (dispatch, getState) => {
+export const createOrder = (plantIds) => (dispatch, getState) => {
   // GET TOKEN FROM STATE
   const auth = getState().auth;
   const accessToken = auth.access;
@@ -96,9 +96,9 @@ export const createOrder = (orderDetails) => (dispatch, getState) => {
     type: UI_LOADING_START,
   });
   axios
-    .get(
+    .post(
       ORDER_CREATE_API,
-      JSON.stringify(orderDetails),
+      JSON.stringify({ plants: plantIds }),
       tokenConfig(accessToken)
     )
     .then((res) => {
@@ -112,7 +112,7 @@ export const createOrder = (orderDetails) => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });

@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 
 import { getPlants } from "../../store/actions/plants";
 import { addPlantToCart, removePlantFromCart } from "../../store/actions/cart";
+import { createOrder } from "../../store/actions/orders";
 import NoImage from "../../assets/img/oops-no-image.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,8 +37,14 @@ const useStyles = makeStyles((theme) => ({
 function AllPlantsComponent(props) {
   const classes = useStyles();
 
-  const { plants, cartPlants, getPlants, addPlantToCart, removePlantFromCart } =
-    props;
+  const {
+    plants,
+    cartPlants,
+    getPlants,
+    addPlantToCart,
+    removePlantFromCart,
+    createOrder,
+  } = props;
 
   React.useEffect(() => {
     getPlants();
@@ -49,6 +56,10 @@ function AllPlantsComponent(props) {
 
   const handleRemovePlantFromCart = (plantId) => {
     removePlantFromCart(plantId);
+  };
+
+  const handleBuyNow = (plantId) => {
+    createOrder([plantId]);
   };
 
   return (
@@ -74,10 +85,13 @@ function AllPlantsComponent(props) {
                   <Typography>{plant.name}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="secondary">
-                    Details
+                  <Button
+                    size="small"
+                    color="secondary"
+                    onClick={() => handleBuyNow(plant.id)}
+                  >
+                    Buy Now
                   </Button>
-
                   {cartPlants.includes(plant.id) ? (
                     <Button
                       size="small"
@@ -110,6 +124,7 @@ AllPlantsComponent.propTypes = {
   cartPlants: PropTypes.array.isRequired,
   addPlantToCart: PropTypes.func.isRequired,
   removePlantFromCart: PropTypes.func.isRequired,
+  createOrder: PropTypes.func.isRequired,
 };
 
 const matpStateToProps = (state) => ({
@@ -121,4 +136,5 @@ export default connect(matpStateToProps, {
   getPlants,
   addPlantToCart,
   removePlantFromCart,
+  createOrder,
 })(AllPlantsComponent);

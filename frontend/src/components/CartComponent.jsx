@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 
 import NoImage from "../assets/img/oops-no-image.jpg";
 import { emptyCart, removePlantFromCart } from "../store/actions/cart";
+import { createOrder } from "../store/actions/orders";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 function CartComponent(props) {
   const classes = useStyles();
 
-  const { emptyCart, removePlantFromCart, cart } = props;
+  const { createOrder, emptyCart, removePlantFromCart, cart } = props;
   const { all_plants: plants, total_price: totalPrice } = cart;
 
   const handleEmptyCart = () => {
@@ -75,46 +76,45 @@ function CartComponent(props) {
   };
 
   const handleCheckout = () => {
-    console.log("checked out");
+    createOrder(cart.plants);
+    emptyCart();
   };
 
   const renderPlants = () => {
-    return plants.map((plant, index) => {
-      return (
-        <div key={index}>
-          <div className={classes.cardRow}>
-            <img
-              className={classes.cardImage}
-              src={plant.image || NoImage}
-              alt="Plant"
-            />
-            <div className={classes.plantDetail}>
-              <Typography variant="h5">{plant.name}</Typography>
-              <Typography variant="h4">₹ {plant.price}</Typography>
-              <Typography variant="body2" color="textSecondary">
-                {new Date(plant.added_on).toLocaleString()}
-              </Typography>
-              <Button
-                size="small"
-                color="secondary"
-                onClick={() => handleDeleteItem(plant.id)}
-                startIcon={<DeleteIcon />}
-                className={classes.removePlantButton}
-              >
-                Remove
-              </Button>
+    return plants
+      .map((plant, index) => {
+        return (
+          <div key={index}>
+            <div className={classes.cardRow}>
+              <img
+                className={classes.cardImage}
+                src={plant.image || NoImage}
+                alt="Plant"
+              />
+              <div className={classes.plantDetail}>
+                <Typography variant="h5">{plant.name}</Typography>
+                <Typography variant="h4">₹ {plant.price}</Typography>
+                <Button
+                  size="small"
+                  color="secondary"
+                  onClick={() => handleDeleteItem(plant.id)}
+                  startIcon={<DeleteIcon />}
+                  className={classes.removePlantButton}
+                >
+                  Remove
+                </Button>
+              </div>
             </div>
+            <Divider />
           </div>
-          <Divider />
-        </div>
-      );
-    });
+        );
+      })
+      .reverse();
   };
 
   return (
     <>
       <Container className={classes.cardGrid} maxWidth="md">
-        {/* End hero unit */}
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h4" align="center">
@@ -178,6 +178,7 @@ CartComponent.propTypes = {
   cart: PropTypes.object.isRequired,
   emptyCart: PropTypes.func.isRequired,
   removePlantFromCart: PropTypes.func.isRequired,
+  createOrder: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -187,4 +188,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   emptyCart,
   removePlantFromCart,
+  createOrder,
 })(CartComponent);
