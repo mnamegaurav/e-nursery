@@ -1,19 +1,13 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 
-import Routes from "./Routes";
+import ThemeProviderComponent from "./layouts/ThemeProviderComponent";
 import store from "./store";
-import { lightTheme } from "./layouts/theme";
 
 function App() {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
-        <Routes />
-      </ThemeProvider>
+      <ThemeProviderComponent />
     </Provider>
   );
 }

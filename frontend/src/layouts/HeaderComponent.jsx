@@ -8,6 +8,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import BrightnessLowIcon from "@material-ui/icons/BrightnessLow";
+import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
 import Link from "@material-ui/core/Link";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,6 +18,7 @@ import { connect } from "react-redux";
 
 import { routes } from "../Routes";
 import { signOut } from "../store/actions/auth";
+import { toggleTheme } from "../store/actions/ui";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   navLogo: {
     fontSize: theme.typography.h5.fontSize,
   },
+  themeSwitchButton: {
+    marginRight: theme.spacing(0.5),
+  },
 }));
 
 function HeaderComponent(props) {
@@ -42,7 +48,7 @@ function HeaderComponent(props) {
 
   const history = useHistory();
 
-  const { signOut, plantsCountInCart } = props;
+  const { signOut, plantsCountInCart, defaultTheme, toggleTheme } = props;
 
   const handleAccountMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -76,7 +82,22 @@ function HeaderComponent(props) {
             </Link>
           </Typography>
           <div className={classes.root} />
-          <div className={classes.sectionDesktop}>
+          <div>
+            <IconButton
+              edge="end"
+              aria-label="theme switch"
+              className={classes.themeSwitchButton}
+              onClick={() =>
+                toggleTheme(defaultTheme === "dark" ? "light" : "dark")
+              }
+              color="inherit"
+            >
+              {defaultTheme === "dark" ? (
+                <BrightnessHighIcon />
+              ) : (
+                <BrightnessLowIcon />
+              )}
+            </IconButton>
             <Link
               component="a"
               onClick={() => handleRouteClick(routes.cart)}
@@ -122,6 +143,16 @@ function HeaderComponent(props) {
 
 HeaderComponent.propTypes = {
   signOut: PropTypes.func.isRequired,
+  plantsCountInCart: PropTypes.number.isRequired,
+  defaultTheme: PropTypes.string.isRequired,
+  toggleTheme: PropTypes.func.isRequired,
 };
 
-export default connect(null, { signOut })(HeaderComponent);
+const matpStateToProps = (state) => ({
+  plantsCountInCart: state.cart.cart.plants.length,
+  defaultTheme: state.ui.defaultTheme,
+});
+
+export default connect(matpStateToProps, { signOut, toggleTheme })(
+  HeaderComponent
+);

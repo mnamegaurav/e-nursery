@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function BaseLayout(props) {
   const classes = useStyles();
 
-  const { getCart, plantsCountInCart, isUiLoading, children } = props;
+  const { getCart, isUiLoading, children } = props;
 
   React.useEffect(() => {
     getCart();
@@ -32,29 +32,21 @@ function BaseLayout(props) {
 
   return (
     <div className={classes.root}>
-      <HeaderComponent
-        classes={classes}
-        plantsCountInCart={plantsCountInCart}
-      />
+      <HeaderComponent classes={classes} />
       {isUiLoading && (
         <LinearProgress color="secondary" className={classes.linearProgress} />
       )}
       {children}
-      <FooterComponent
-        classes={classes}
-        plantsCountInCart={plantsCountInCart}
-      />
+      <FooterComponent classes={classes} />
     </div>
   );
 }
 
 BaseLayout.propTypes = {
-  plantsCountInCart: PropTypes.number.isRequired,
   isUiLoading: PropTypes.bool.isRequired,
 };
 
 const matpStateToProps = (state) => ({
-  plantsCountInCart: state.cart.cart.plants.length,
   isUiLoading: state.ui.isUiLoading,
 });
 
