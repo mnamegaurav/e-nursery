@@ -55,7 +55,7 @@ function OrdersComponent(props) {
       .map((order, index) => {
         return (
           <div key={index}>
-            <Accordion defaultExpanded className={classes.orderAccordian}>
+            <Accordion defaultExpanded={order.is_active} className={classes.orderAccordian}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1c-content"
