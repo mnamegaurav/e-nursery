@@ -34,7 +34,7 @@ export const getOrders = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });
@@ -58,7 +58,7 @@ export const cancelOrder = (orderId) => (dispatch, getState) => {
   });
   axios
     .patch(
-      ORDER_API + orderId,
+      `${ORDER_API}${orderId}/`,
       JSON.stringify({ is_active: false }),
       tokenConfig(accessToken)
     )
@@ -73,7 +73,7 @@ export const cancelOrder = (orderId) => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });

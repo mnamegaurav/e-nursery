@@ -5,12 +5,12 @@ import { Provider } from "react-redux";
 
 import Routes from "./Routes";
 import store from "./store";
-import { theme } from "./layouts/theme";
+import { lightTheme } from "./layouts/theme";
 
 function App() {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={lightTheme}>
         <CssBaseline />
         <Routes />
       </ThemeProvider>

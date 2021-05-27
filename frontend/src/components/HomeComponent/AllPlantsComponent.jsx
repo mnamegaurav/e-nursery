@@ -11,9 +11,9 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
-import { getPlants } from "../store/actions/plants";
-import { addPlantToCart, removePlantFromCart } from "../store/actions/cart";
-import NoImage from "../assets/img/oops-no-image.jpg";
+import { getPlants } from "../../store/actions/plants";
+import { addPlantToCart, removePlantFromCart } from "../../store/actions/cart";
+import NoImage from "../../assets/img/oops-no-image.jpg";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {

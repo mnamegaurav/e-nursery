@@ -6,7 +6,7 @@ import Link from "@material-ui/core/Link";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import OfferImage1 from "../assets/img/image1.jpg";
+import OfferImage1 from "../../assets/img/image1.jpg";
 
 const useStyles = makeStyles((theme) => ({
   mainFeaturedPost: {

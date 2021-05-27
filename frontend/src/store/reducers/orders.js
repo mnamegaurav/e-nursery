@@ -14,7 +14,11 @@ export default function ordersReducer(state = initialState, action) {
     case CANCEL_ORDER:
       return {
         ...state,
-        orders: state.orders.filter((order) => order.id !== action.payload),
+        orders: state.orders.map((order) => {
+          return order.id === action.payload
+            ? { ...order, is_active: false }
+            : order;
+        }),
       };
     case CREATE_ORDER:
       return {

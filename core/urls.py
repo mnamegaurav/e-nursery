@@ -8,7 +8,7 @@ from core.views import (
     OrdersListAPIView,
     OrderCreateAPIView,
     OrderRetrieveUpdateAPIView,
-    
+
     NurseryOrdersListAPIView,
 
     ShopsListAPIView,
@@ -18,7 +18,7 @@ from core.views import (
     PlantsListAPIView,
     PlantsCreateAPIView,
     PlantRetrieveUpdateDestroyAPIView,
-    )
+)
 
 
 urlpatterns = [
@@ -26,7 +26,7 @@ urlpatterns = [
 
     path('api/me/orders/', OrdersListAPIView.as_view()),
     path('api/me/order/create/', OrderCreateAPIView.as_view()),
-    path('api/me/order/<int:pk>/', OrderRetrieveUpdateAPIView.as_view()),
+    path('api/me/order/<uuid:pk>/', OrderRetrieveUpdateAPIView.as_view()),
 
     path('api/nursery/orders/', NurseryOrdersListAPIView.as_view()),
 

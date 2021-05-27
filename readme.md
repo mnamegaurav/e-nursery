@@ -5,8 +5,9 @@
 ##### Users can signup and see all the plants available from different nurseries. They should also be able to add the plants to their cart and place orders. Nurseries should be able to signup and add plants to their shop. They should also be able to view orders placed by users.
 
 ### Live :sparkles: 
-You can find the project live [here](https://enursery.herokuapp.com/) :point_left:
+You can checkout the project live [here](https://enursery.netlify.app/) :point_left:
 
+The Backend is deployed [here](https://enursery.herokuapp.com/)
 
 ### Features :information_source: 
 

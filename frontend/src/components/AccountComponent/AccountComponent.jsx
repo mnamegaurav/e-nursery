@@ -21,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+    },
   },
   cardContent: {
     flexGrow: 1,
+    display: "block",
   },
   cardActions: {
     display: "flex",
@@ -53,11 +56,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  orderDetail: {
+  plantDetail: {
     textAlign: "end",
   },
-  cancelOrderButton: {
-    marginTop: theme.spacing(1),
+  orderAccordian: {
+    marginBottom: theme.spacing(3),
   },
 }));
 
