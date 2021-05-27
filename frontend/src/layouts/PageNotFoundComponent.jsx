@@ -1,9 +1,27 @@
-// Page to show for 404 or page not found errors
+import NotFoundImage from "../assets/img/not-found.svg";
 
-export default function PageNotFoundComponent() {
+function PageNotFoundComponent() {
   return (
     <>
-      <h1>404</h1>
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img
+          alt="Under development"
+          src={NotFoundImage}
+          style={{
+            maxWidth: "100%",
+          }}
+        />
+      </div>
     </>
   );
 }
+
+export default PageNotFoundComponent;
