@@ -16,17 +16,32 @@ function ProfileComponent(props) {
   const { classes, isUiLoading, user } = props;
 
   const [isEditEnabled, setIsEditEnabled] = React.useState(false);
+  const [userDetail, setUserDetail] = React.useState(() => user);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    // update user detail with userDetailUpdate action
   };
 
-  const handleInputChange = (e) => {};
+  const handleInputChange = (e) => {
+    setUserDetail((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-  const handleCheckboxChange = (e) => {};
+  const handleCheckboxChange = (e) => {
+    setUserDetail((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.checked,
+    }));
+  };
 
   const handleToggleEditButton = () => {
-    setIsEditEnabled((prevState) => !prevState);
+    setIsEditEnabled((prevState) => {
+      prevState === true && setUserDetail(user);
+      return !prevState;
+    });
   };
 
   return (
@@ -56,7 +71,7 @@ function ProfileComponent(props) {
                       label="Full Name"
                       name="full_name"
                       onChange={handleInputChange}
-                      defaultValue={user.full_name}
+                      value={userDetail.full_name}
                       disabled={!isEditEnabled}
                     />
                   </Grid>
@@ -70,7 +85,7 @@ function ProfileComponent(props) {
                       label="Username"
                       name="username"
                       onChange={handleInputChange}
-                      defaultValue={user.username}
+                      value={userDetail.username}
                       disabled={!isEditEnabled}
                     />
                   </Grid>
@@ -85,7 +100,7 @@ function ProfileComponent(props) {
                       name="email"
                       autoComplete="email"
                       onChange={handleInputChange}
-                      defaultValue={user.email}
+                      value={userDetail.email}
                       disabled={!isEditEnabled}
                     />
                   </Grid>
@@ -96,7 +111,7 @@ function ProfileComponent(props) {
                           color="secondary"
                           name="is_nursery"
                           onChange={handleCheckboxChange}
-                          defaultChecked={user.is_nursery}
+                          checked={userDetail.is_nursery}
                           disabled={!isEditEnabled}
                         />
                       }

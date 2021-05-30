@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
   },
   cardContentOrders: {
-    maxHeight: "80vh",
+    maxHeight: "60vh",
     overflowY: "scroll",
   },
   cardActions: {
