@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: "block",
   },
+  cardContentOrders: {
+    maxHeight: "80vh",
+    overflowY: "scroll",
+  },
   cardActions: {
     display: "flex",
     alignSelf: "flex-end",
@@ -61,6 +65,11 @@ const useStyles = makeStyles((theme) => ({
   },
   orderAccordian: {
     marginBottom: theme.spacing(3),
+  },
+  actionButtons: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    marginTop: theme.spacing(2),
   },
 }));
 

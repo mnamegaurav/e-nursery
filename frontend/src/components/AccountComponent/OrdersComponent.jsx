@@ -10,6 +10,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import clsx from "clsx";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 
@@ -55,7 +56,10 @@ function OrdersComponent(props) {
       .map((order, index) => {
         return (
           <div key={index}>
-            <Accordion defaultExpanded={order.is_active} className={classes.orderAccordian}>
+            <Accordion
+              defaultExpanded={order.is_active}
+              className={classes.orderAccordian}
+            >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1c-content"
@@ -116,7 +120,12 @@ function OrdersComponent(props) {
           <Grid item xs={12}>
             {orders.length ? (
               <>
-                <CardContent className={classes.cardContent}>
+                <CardContent
+                  className={clsx(
+                    classes.cardContent,
+                    classes.cardContentOrders
+                  )}
+                >
                   <Divider />
                   {renderOrders()}
                 </CardContent>

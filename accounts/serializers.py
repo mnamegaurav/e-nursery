@@ -17,9 +17,11 @@ class UserDetailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class UserSignUpSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
-    password2 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
-    
+    password1 = serializers.CharField(required=True, write_only=True, style={
+                                      'input_type': 'password'})
+    password2 = serializers.CharField(required=True, write_only=True, style={
+                                      'input_type': 'password'})
+
     class Meta:
         model = User
         fields = [
@@ -30,7 +32,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
             'password1',
             'password2',
         ]
-        read_only_fields = ('full_name','username',)
+        read_only_fields = ('full_name', 'username',)
         extra_kwargs = {
             'password1': {'write_only': True},
             'password2': {'write_only': True},
@@ -42,7 +44,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         password1 = validated_data.get('password1')
         password2 = validated_data.get('password2')
 
-        if password1==password2:
+        if password1 == password2:
             user = User(email=email, is_nursery=is_nursery)
             user.set_password(password1)
             user.save()

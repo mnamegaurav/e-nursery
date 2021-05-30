@@ -10,6 +10,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import BrightnessLowIcon from "@material-ui/icons/BrightnessLow";
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
+import HomeIcon from "@material-ui/icons/Home";
 import Link from "@material-ui/core/Link";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,13 +30,20 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+  },
+  navLogo: {
+    fontSize: theme.typography.h5.fontSize,
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
   },
-  navLogo: {
-    fontSize: theme.typography.h5.fontSize,
+  navLogoImage: {
+    flexGrow: 1,
+    display: "block",
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
   },
   themeSwitchButton: {
     marginRight: theme.spacing(0.5),
@@ -80,6 +88,16 @@ function HeaderComponent(props) {
             >
               E-Nursery
             </Link>
+            <IconButton
+              edge="end"
+              aria-label="home"
+              aria-haspopup="true"
+              className={classes.navLogoImage}
+              onClick={() => handleRouteClick(routes.root)}
+              color="inherit"
+            >
+              <HomeIcon />
+            </IconButton>
           </Typography>
           <div className={classes.root} />
           <div>

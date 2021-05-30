@@ -33,6 +33,8 @@ class UserSignInAPIView(TokenObtainPairView):
             serializer.validated_data.update({"user": user})
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
 
 class UserSignUpAPIView(APIView):
     serializer_class = UserSignUpSerializer
