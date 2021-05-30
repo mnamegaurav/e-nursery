@@ -2,6 +2,7 @@ import {
   USER_LOADING,
   USER_LOADING_SUCCESS,
   USER_LOADING_FAIL,
+  USER_DETAILS_UPDATED,
   SIGNIN_SUCCESS,
   SIGNIN_FAIL,
   SIGNUP_SUCCESS,
@@ -26,6 +27,7 @@ export default function authReducer(state = initialState, action) {
         isLoading: true,
       };
     case USER_LOADING_SUCCESS:
+    case USER_DETAILS_UPDATED:
       return {
         ...state,
         isAuthenticated: true,

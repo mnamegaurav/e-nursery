@@ -12,8 +12,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { updateUserDetails } from "../../store/actions/auth";
+
 function ProfileComponent(props) {
-  const { classes, isUiLoading, user } = props;
+  const { classes, isUiLoading, user, updateUserDetails } = props;
 
   const [isEditEnabled, setIsEditEnabled] = React.useState(false);
   const [userDetail, setUserDetail] = React.useState(() => user);
@@ -21,6 +23,10 @@ function ProfileComponent(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // update user detail with userDetailUpdate action
+    if (userDetail) {
+      console.log("submitting...");
+      updateUserDetails(userDetail);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -124,7 +130,7 @@ function ProfileComponent(props) {
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={6}>
                         <Button
-                          type="submit"
+                          type="button"
                           fullWidth
                           variant="outlined"
                           color="secondary"
@@ -151,7 +157,7 @@ function ProfileComponent(props) {
                     </Grid>
                   ) : (
                     <Button
-                      type="submit"
+                      type="button"
                       fullWidth
                       variant="contained"
                       color="secondary"
@@ -174,6 +180,7 @@ function ProfileComponent(props) {
 ProfileComponent.propTypes = {
   isUiLoading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
+  updateUserDetails: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -181,4 +188,6 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(ProfileComponent);
+export default connect(mapStateToProps, { updateUserDetails })(
+  ProfileComponent
+);

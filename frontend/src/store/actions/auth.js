@@ -18,6 +18,7 @@ import {
   UI_LOADING_START,
   UI_LOADING_END,
   SHOW_ALERT_MESSAGE,
+  USER_DETAILS_UPDATED,
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
 
@@ -46,14 +47,6 @@ export const loadUser = () => (dispatch, getState) => {
         // End Loading the UI
         dispatch({
           type: UI_LOADING_END,
-        });
-        // show the alert
-        dispatch({
-          type: SHOW_ALERT_MESSAGE,
-          payload: {
-            text: "Welcome to the App",
-            type: "success",
-          },
         });
       })
       .catch((err) => {
@@ -210,4 +203,60 @@ export const signOut = () => (dispatch, getState) => {
         },
       });
     });
+};
+
+// Update the profile
+export const updateUserDetails = (userDetail) => (dispatch, getState) => {
+  // GET TOKEN FROM STATE
+  const auth = getState().auth;
+  const accessToken = auth.access;
+
+  if (accessToken) {
+    // Start Loading the UI
+    dispatch({
+      type: UI_LOADING_START,
+    });
+    axios
+      .patch(
+        USER_DETAIL_API,
+        JSON.stringify(userDetail),
+        tokenConfig(accessToken)
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch({
+            type: USER_DETAILS_UPDATED,
+            payload: res.data,
+          });
+          //Show the alert
+          dispatch({
+            type: SHOW_ALERT_MESSAGE,
+            payload: {
+              text: "Successfully updated the profile details!",
+              type: "success",
+            },
+          });
+        }
+        // End Loading the UI
+        dispatch({
+          type: UI_LOADING_END,
+        });
+      })
+      .catch((err) => {
+        if (err.response) {
+          //Show the alert
+          dispatch({
+            type: SHOW_ALERT_MESSAGE,
+            payload: {
+              text: "Unable to update the details, some error occured!",
+              type: "error",
+            },
+          });
+        }
+        // End Loading the UI
+        dispatch({
+          type: UI_LOADING_END,
+        });
+      });
+  }
 };
