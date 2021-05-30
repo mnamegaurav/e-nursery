@@ -6,9 +6,7 @@ import { connect } from "react-redux";
 
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-import AlertComponent from "./AlertComponent";
 import { getCart } from "../store/actions/cart";
-import { hideAlert } from "../store/actions/ui";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function BaseLayout(props) {
   const classes = useStyles();
 
-  const { getCart, isUiLoading, children, hideAlert, alertMessage } = props;
+  const { getCart, isUiLoading, children } = props;
 
   React.useEffect(() => {
     getCart();
@@ -39,25 +37,17 @@ function BaseLayout(props) {
         <LinearProgress color="secondary" className={classes.linearProgress} />
       )}
       {children}
-      <AlertComponent
-        hideAlert={hideAlert}
-        text={alertMessage.text}
-        type={alertMessage.type}
-      />
       <FooterComponent classes={classes} />
     </div>
   );
 }
 
 BaseLayout.propTypes = {
-  alertMessage: PropTypes.object.isRequired,
-  hideAlert: PropTypes.func.isRequired,
   isUiLoading: PropTypes.bool.isRequired,
 };
 
 const matpStateToProps = (state) => ({
-  alertMessage: state.ui.alertMessage,
   isUiLoading: state.ui.isUiLoading,
 });
 
-export default connect(matpStateToProps, { getCart, hideAlert })(BaseLayout);
+export default connect(matpStateToProps, { getCart })(BaseLayout);

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
 import Routes from "../Routes";
+import AlertProviderComponent from "./AlertProviderComponent";
 import { lightTheme, darkTheme } from "../theme";
 
 const ThemeProviderComponent = (props) => {
@@ -19,6 +20,7 @@ const ThemeProviderComponent = (props) => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes />
+      <AlertProviderComponent />
     </ThemeProvider>
   );
 };

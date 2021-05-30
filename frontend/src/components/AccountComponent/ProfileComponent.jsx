@@ -12,10 +12,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { showAlert } from "../../store/actions/ui";
-
 function ProfileComponent(props) {
-  const { classes, isUiLoading, user, showAlert } = props;
+  const { classes, isUiLoading, user } = props;
 
   const [isEditEnabled, setIsEditEnabled] = React.useState(false);
   const [userDetail, setUserDetail] = React.useState(() => user);
@@ -23,7 +21,6 @@ function ProfileComponent(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // update user detail with userDetailUpdate action
-    showAlert({ text: "Succesfully submitted", type: "success" });
   };
 
   const handleInputChange = (e) => {
@@ -177,7 +174,6 @@ function ProfileComponent(props) {
 ProfileComponent.propTypes = {
   isUiLoading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
-  showAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -185,4 +181,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { showAlert })(ProfileComponent);
+export default connect(mapStateToProps)(ProfileComponent);

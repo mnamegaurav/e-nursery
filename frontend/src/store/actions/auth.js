@@ -17,6 +17,7 @@ import {
   SIGNUP_FAIL,
   UI_LOADING_START,
   UI_LOADING_END,
+  SHOW_ALERT_MESSAGE,
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
 
@@ -45,6 +46,14 @@ export const loadUser = () => (dispatch, getState) => {
         // End Loading the UI
         dispatch({
           type: UI_LOADING_END,
+        });
+        // show the alert
+        dispatch({
+          type: SHOW_ALERT_MESSAGE,
+          payload: {
+            text: "Welcome to the App",
+            type: "success",
+          },
         });
       })
       .catch((err) => {
@@ -89,11 +98,28 @@ export const signIn = (email, password) => (dispatch) => {
       dispatch({
         type: UI_LOADING_END,
       });
+      //Show the alert
+      dispatch({
+        type: SHOW_ALERT_MESSAGE,
+        payload: {
+          text: "Successfully signed in, Welcome!",
+          type: "success",
+        },
+      });
     })
     .catch((err) => {
       if (err.response) {
         dispatch({
           type: SIGNIN_FAIL,
+        });
+        //Show the alert
+        dispatch({
+          type: SHOW_ALERT_MESSAGE,
+          payload: {
+            text:
+              (err.response && err.response.detail) || "Some Error occured.",
+            type: "error",
+          },
         });
       }
       // End Loading the UI
@@ -121,6 +147,14 @@ export const signUp = (credentials) => (dispatch) => {
           type: SIGNUP_SUCCESS,
           payload: res.data,
         });
+        //Show the alert
+        dispatch({
+          type: SHOW_ALERT_MESSAGE,
+          payload: {
+            text: "Successfully created your account, Please Signin.",
+            type: "success",
+          },
+        });
       }
       // End Loading the UI
       dispatch({
@@ -131,6 +165,15 @@ export const signUp = (credentials) => (dispatch) => {
       if (err.response) {
         dispatch({
           type: SIGNUP_FAIL,
+        });
+        //Show the alert
+        dispatch({
+          type: SHOW_ALERT_MESSAGE,
+          payload: {
+            text:
+              (err.response && err.response.detail) || "Some Error occured.",
+            type: "error",
+          },
         });
       }
       // End Loading the UI
@@ -157,6 +200,14 @@ export const signOut = () => (dispatch, getState) => {
       // End Loading the UI
       dispatch({
         type: UI_LOADING_END,
+      });
+      //Show the alert
+      dispatch({
+        type: SHOW_ALERT_MESSAGE,
+        payload: {
+          text: "We are hoping to see you again very soon!",
+          type: "success",
+        },
       });
     });
 };

@@ -39,7 +39,6 @@ export default function uiReducer(state = initialState, action) {
         alertMessage: action.payload,
       };
     case HIDE_ALERT_MESSAGE:
-      console.log(state.alertMessage);
       return {
         ...state,
         alertMessage: {

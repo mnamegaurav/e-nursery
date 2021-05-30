@@ -6,6 +6,7 @@ import {
   UI_LOADING_START,
   UI_LOADING_END,
   UNAUTHORIZED_ACCESS,
+  SHOW_ALERT_MESSAGE,
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
 
@@ -35,6 +36,14 @@ export const getPlants = () => (dispatch, getState) => {
       if (err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
+        });
+        //Show the alert
+        dispatch({
+          type: SHOW_ALERT_MESSAGE,
+          payload: {
+            text: "You  are not authorized to perform this action!",
+            type: "error",
+          },
         });
       }
       // End Loading the UI

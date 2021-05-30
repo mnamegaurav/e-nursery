@@ -9,6 +9,7 @@ import {
   UI_LOADING_START,
   UI_LOADING_END,
   UNAUTHORIZED_ACCESS,
+  SHOW_ALERT_MESSAGE,
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
 
@@ -75,11 +76,27 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
       dispatch({
         type: UI_LOADING_END,
       });
+      //Show the alert
+      dispatch({
+        type: SHOW_ALERT_MESSAGE,
+        payload: {
+          text: "Added the plant to cart!",
+          type: "success",
+        },
+      });
     })
     .catch((err) => {
       if (err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
+        });
+        //Show the alert
+        dispatch({
+          type: SHOW_ALERT_MESSAGE,
+          payload: {
+            text: "You are not authorized to perform this action.",
+            type: "error",
+          },
         });
       }
       // End Loading the UI
@@ -113,11 +130,27 @@ export const removePlantFromCart = (plantId) => (dispatch, getState) => {
       dispatch({
         type: UI_LOADING_END,
       });
+      //Show the alert
+      dispatch({
+        type: SHOW_ALERT_MESSAGE,
+        payload: {
+          text: "Removed a plant from the cart!",
+          type: "success",
+        },
+      });
     })
     .catch((err) => {
       if (err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
+        });
+        //Show the alert
+        dispatch({
+          type: SHOW_ALERT_MESSAGE,
+          payload: {
+            text: "You are not authorized to perform this action!",
+            type: "error",
+          },
         });
       }
       // End Loading the UI

@@ -2,9 +2,13 @@ import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-export default function AlertComponent(props) {
-  const { hideAlert, text /*, type*/ } = props;
+import { hideAlert } from "../store/actions/ui";
+
+function AlertProviderComponent(props) {
+  const { hideAlert, alertMessage } = props;
 
   const handleClose = (event, reason) => {
     hideAlert();
@@ -16,10 +20,10 @@ export default function AlertComponent(props) {
         vertical: "top",
         horizontal: "right",
       }}
-      open={Boolean(text)}
+      open={Boolean(alertMessage.text)}
       autoHideDuration={5000}
       onClose={handleClose}
-      message={text}
+      message={alertMessage.text}
       action={
         <>
           <IconButton
@@ -35,3 +39,14 @@ export default function AlertComponent(props) {
     />
   );
 }
+
+AlertProviderComponent.propTypes = {
+  alertMessage: PropTypes.object.isRequired,
+  hideAlert: PropTypes.func.isRequired,
+};
+
+const matpStateToProps = (state) => ({
+  alertMessage: state.ui.alertMessage,
+});
+
+export default connect(matpStateToProps, { hideAlert })(AlertProviderComponent);
