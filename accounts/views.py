@@ -9,7 +9,7 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from accounts.serializers import UserSignUpSerializer, UserDetailSerializer
+from accounts.serializers import UserSignUpSerializer, UserDetailSerializer, UserDeactivateSerializer
 
 # Create your views here.
 
@@ -22,6 +22,25 @@ class UserDetailAPIView(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class UserDeactivateAPIView(RetrieveUpdateAPIView):
+    serializer_class = UserDeactivateSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    def get_object(self):
+        return self.request.user
+
+    def put(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid() and self.get_object().is_active:
+            serializer.update(self.get_object(), serializer.validated_data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserSignInAPIView(TokenObtainPairView):

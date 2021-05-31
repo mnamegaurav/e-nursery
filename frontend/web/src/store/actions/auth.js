@@ -5,11 +5,13 @@ import {
   SIGNUP_API,
   SIGNOUT_API,
   USER_DETAIL_API,
+  USER_DEACTIVATE_API,
 } from "../../api";
 import {
   USER_LOADING,
   USER_LOADING_SUCCESS,
   USER_LOADING_FAIL,
+  USER_DEACTIVATED,
   SIGNIN_SUCCESS,
   SIGNIN_FAIL,
   SIGNOUT_SUCCESS,
@@ -249,6 +251,61 @@ export const updateUserDetails = (userDetail) => (dispatch, getState) => {
             type: SHOW_ALERT_MESSAGE,
             payload: {
               text: "Unable to update the details, some error occured!",
+              type: "error",
+            },
+          });
+        }
+        // End Loading the UI
+        dispatch({
+          type: UI_LOADING_END,
+        });
+      });
+  }
+};
+
+// deactivate the profile
+export const deactivateUser = () => (dispatch, getState) => {
+  // GET TOKEN FROM STATE
+  const auth = getState().auth;
+  const accessToken = auth.access;
+
+  if (accessToken) {
+    // Start Loading the UI
+    dispatch({
+      type: UI_LOADING_START,
+    });
+    axios
+      .patch(
+        USER_DEACTIVATE_API,
+        JSON.stringify({ is_active: false }),
+        tokenConfig(accessToken)
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch({
+            type: USER_DEACTIVATED,
+          });
+          //Show the alert
+          dispatch({
+            type: SHOW_ALERT_MESSAGE,
+            payload: {
+              text: "We are sorry to see you go, hoping for your return!",
+              type: "success",
+            },
+          });
+        }
+        // End Loading the UI
+        dispatch({
+          type: UI_LOADING_END,
+        });
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 401) {
+          //Show the alert
+          dispatch({
+            type: SHOW_ALERT_MESSAGE,
+            payload: {
+              text: "You are not authorized to perform this action",
               type: "error",
             },
           });

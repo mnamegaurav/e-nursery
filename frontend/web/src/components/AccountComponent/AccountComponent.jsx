@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     flexGrow: 1,
     display: "block",
+    marginTop: theme.spacing(2),
   },
   cardContentOrders: {
     maxHeight: "60vh",

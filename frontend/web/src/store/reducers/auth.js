@@ -3,6 +3,7 @@ import {
   USER_LOADING_SUCCESS,
   USER_LOADING_FAIL,
   USER_DETAILS_UPDATED,
+  USER_DEACTIVATED,
   SIGNIN_SUCCESS,
   SIGNIN_FAIL,
   SIGNUP_SUCCESS,
@@ -49,6 +50,7 @@ export default function authReducer(state = initialState, action) {
     case SIGNOUT_SUCCESS:
     case USER_LOADING_FAIL:
     case UNAUTHORIZED_ACCESS:
+    case USER_DEACTIVATED:
       localStorage.clear();
       return {
         ...state,

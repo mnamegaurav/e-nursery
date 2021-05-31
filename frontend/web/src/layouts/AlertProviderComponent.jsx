@@ -17,8 +17,8 @@ function AlertProviderComponent(props) {
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: "bottom",
+        horizontal: "left",
       }}
       open={Boolean(alertMessage.text)}
       autoHideDuration={5000}

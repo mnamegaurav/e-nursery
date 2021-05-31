@@ -3,6 +3,7 @@ export const SIGNUP_API = `${process.env.REACT_APP_BACKEND_API}/signup/`;
 export const SIGNOUT_API = `${process.env.REACT_APP_BACKEND_API}/signout/`;
 
 export const USER_DETAIL_API = `${process.env.REACT_APP_BACKEND_API}/me/`;
+export const USER_DEACTIVATE_API = `${process.env.REACT_APP_BACKEND_API}/me/deactivate/`;
 
 export const TOKEN_REFRESH_API = `${process.env.REACT_APP_BACKEND_API}/token/refresh/`;
 

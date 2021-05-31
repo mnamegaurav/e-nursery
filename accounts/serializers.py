@@ -8,12 +8,21 @@ User = get_user_model()
 class UserDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = [
+        fields = (
             'email',
             'is_nursery',
             'full_name',
             'username',
-        ]
+        )
+        read_only_fields = ('is_nursery',)
+
+
+class UserDeactivateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'is_active',
+        )
 
 
 class UserSignUpSerializer(serializers.ModelSerializer):

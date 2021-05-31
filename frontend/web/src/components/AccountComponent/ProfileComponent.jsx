@@ -5,20 +5,26 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { updateUserDetails } from "../../store/actions/auth";
+import { updateUserDetails, deactivateUser } from "../../store/actions/auth";
 
 function ProfileComponent(props) {
-  const { classes, isUiLoading, user, updateUserDetails } = props;
+  const { classes, isUiLoading, user, updateUserDetails, deactivateUser } =
+    props;
 
   const [isEditEnabled, setIsEditEnabled] = React.useState(false);
   const [userDetail, setUserDetail] = React.useState(() => user);
+  const [deactivateDialogOpen, setDeactivateDialogOpen] = React.useState(false);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -36,11 +42,19 @@ function ProfileComponent(props) {
     }));
   };
 
-  const handleCheckboxChange = (e) => {
-    setUserDetail((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.checked,
-    }));
+  // const handleCheckboxChange = (e) => {
+  //   setUserDetail((prevState) => ({
+  //     ...prevState,
+  //     [e.target.name]: e.target.checked,
+  //   }));
+  // };
+
+  const handleCloseDeactivateDialog = () => {
+    setDeactivateDialogOpen(false);
+  };
+
+  const handleOpenDeactivateDialog = () => {
+    setDeactivateDialogOpen(true);
   };
 
   const handleToggleEditButton = () => {
@@ -48,6 +62,10 @@ function ProfileComponent(props) {
       prevState === true && setUserDetail(user);
       return !prevState;
     });
+  };
+
+  const handleDeactivateUser = () => {
+    deactivateUser();
   };
 
   return (
@@ -110,20 +128,6 @@ function ProfileComponent(props) {
                       disabled={!isEditEnabled}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          color="secondary"
-                          name="is_nursery"
-                          onChange={handleCheckboxChange}
-                          checked={userDetail.is_nursery}
-                          disabled={!isEditEnabled}
-                        />
-                      }
-                      label="I am a Nursery."
-                    />
-                  </Grid>
                 </Grid>
                 <CardActions className={classes.actionButtons}>
                   {isEditEnabled ? (
@@ -169,9 +173,42 @@ function ProfileComponent(props) {
                   )}
                 </CardActions>
               </form>
+              <Link
+                className={classes.cardContent}
+                onClick={handleOpenDeactivateDialog}
+                underline="always"
+                component="button"
+                color="inherit"
+              >
+                Deactivate My Account
+              </Link>
             </CardContent>
           </Grid>
         </Grid>
+        <Dialog
+          open={deactivateDialogOpen}
+          onClose={handleCloseDeactivateDialog}
+          aria-labelledby="deactivate-my-account"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="deactivate-my-account">
+            {"Are you sure to deactivate your account?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              This is an irreversible process, you can not login again without
+              our permissions after deactivating.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDeactivateDialog} color="inherit">
+              No
+            </Button>
+            <Button onClick={handleDeactivateUser} color="secondary" autoFocus>
+              Deactivate
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Card>
     </>
   );
@@ -181,6 +218,7 @@ ProfileComponent.propTypes = {
   isUiLoading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   updateUserDetails: PropTypes.func.isRequired,
+  deactivateUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -188,6 +226,6 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { updateUserDetails })(
+export default connect(mapStateToProps, { updateUserDetails, deactivateUser })(
   ProfileComponent
 );
