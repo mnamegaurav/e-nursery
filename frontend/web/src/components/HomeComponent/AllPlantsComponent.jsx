@@ -11,10 +11,11 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
+import ProductDetailsComponent from "../ProductDetailsComponent";
+import NoImage from "../../assets/img/oops-no-image.jpg";
 import { getPlants } from "../../store/actions/plants";
 import { addPlantToCart, removePlantFromCart } from "../../store/actions/cart";
 import { createOrder } from "../../store/actions/orders";
-import NoImage from "../../assets/img/oops-no-image.jpg";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(8),
   },
   card: {
-    height: "100%",
+    // height: "100%",
     display: "flex",
     flexDirection: "column",
   },
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "56.25%", // 16:9
   },
   cardContent: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
 }));
 
@@ -111,6 +112,7 @@ function AllPlantsComponent(props) {
                   )}
                 </CardActions>
               </Card>
+              <ProductDetailsComponent plant={plant} />
             </Grid>
           ))}
         </Grid>
