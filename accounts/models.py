@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from accounts.managers import CustomUserManager
 
 # Create your models here.
+
+
 class User(AbstractUser):
     is_nursery = models.BooleanField(default=False)
     email = models.EmailField(unique=True)

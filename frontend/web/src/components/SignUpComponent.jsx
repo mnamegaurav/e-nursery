@@ -64,15 +64,16 @@ function SignUpComponent(props) {
 
   const history = useHistory();
 
-  const [crendentials, setCrendentials] = React.useState(initialCredentials);
   const { isAuthenticated, isUiLoading, signUp } = props;
+
+  const [crendentials, setCrendentials] = React.useState(initialCredentials);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     // submit the form
-    const { is_nursery, email, password1, password2 } = crendentials;
-    if ((is_nursery, email && password1 && password1 === password2)) {
+    const { email, password1, password2 } = crendentials;
+    if (email && password1 && password1 === password2) {
       signUp(crendentials);
     }
   };

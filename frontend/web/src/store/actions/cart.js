@@ -37,7 +37,7 @@ export const getCart = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });
@@ -86,7 +86,7 @@ export const addPlantToCart = (plantId) => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });
@@ -140,7 +140,7 @@ export const removePlantFromCart = (plantId) => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });
@@ -182,7 +182,7 @@ export const emptyCart = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });

@@ -47,3 +47,7 @@ class OrderSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         validated_data = {'is_active': validated_data.pop('is_active')}
         return super().update(instance, validated_data)
+
+    # overrride the create method to add payment and other things
+    def create(self, validated_data):
+        return super().create(validated_data)

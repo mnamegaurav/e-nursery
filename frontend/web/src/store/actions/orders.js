@@ -119,14 +119,6 @@ export const createOrder = (plantIds) => (dispatch, getState) => {
       tokenConfig(accessToken)
     )
     .then((res) => {
-      dispatch({
-        type: CREATE_ORDER,
-        payload: res.data,
-      });
-      // End Loading the UI
-      dispatch({
-        type: UI_LOADING_END,
-      });
       //Show the alert
       dispatch({
         type: SHOW_ALERT_MESSAGE,
@@ -134,6 +126,14 @@ export const createOrder = (plantIds) => (dispatch, getState) => {
           text: "Created your new order!",
           type: "success",
         },
+      });
+      dispatch({
+        type: CREATE_ORDER,
+        payload: res.data,
+      });
+      // End Loading the UI
+      dispatch({
+        type: UI_LOADING_END,
       });
     })
     .catch((err) => {

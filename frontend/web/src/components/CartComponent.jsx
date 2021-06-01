@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
 function CartComponent(props) {
   const classes = useStyles();
 
-  const { createOrder, emptyCart, removePlantFromCart, cart } = props;
+  const { isUiLoading, createOrder, emptyCart, removePlantFromCart, cart } =
+    props;
   const { all_plants: plants, total_price: totalPrice } = cart;
 
   const handleEmptyCart = () => {
@@ -76,6 +77,7 @@ function CartComponent(props) {
   };
 
   const handleCheckout = () => {
+    console.log(cart.plants);
     createOrder(cart.plants);
     emptyCart();
   };
@@ -100,6 +102,7 @@ function CartComponent(props) {
                   onClick={() => handleDeleteItem(plant.id)}
                   startIcon={<DeleteIcon />}
                   className={classes.removePlantButton}
+                  disabled={isUiLoading}
                 >
                   Remove
                 </Button>
@@ -135,6 +138,7 @@ function CartComponent(props) {
                         color="secondary"
                         onClick={handleEmptyCart}
                         variant="outlined"
+                        disabled={isUiLoading}
                       >
                         Clear
                       </Button>
@@ -159,7 +163,7 @@ function CartComponent(props) {
                     onClick={handleCheckout}
                     variant="contained"
                     fullWidth
-                    disabled={plants.length ? false : true}
+                    disabled={(plants.length ? false : true) || isUiLoading}
                   >
                     Checkout
                   </Button>
@@ -179,10 +183,12 @@ CartComponent.propTypes = {
   emptyCart: PropTypes.func.isRequired,
   removePlantFromCart: PropTypes.func.isRequired,
   createOrder: PropTypes.func.isRequired,
+  isUiLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
+  isUiLoading: state.ui.isUiLoading,
 });
 
 export default connect(mapStateToProps, {

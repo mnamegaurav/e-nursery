@@ -48,6 +48,7 @@ function AllPlantsComponent(props) {
     addPlantToCart,
     removePlantFromCart,
     createOrder,
+    isUiLoading,
   } = props;
 
   React.useEffect(() => {
@@ -102,6 +103,7 @@ function AllPlantsComponent(props) {
                       color="secondary"
                       fullWidth
                       onClick={() => handleRemovePlantFromCart(plant.id)}
+                      disabled={isUiLoading}
                     >
                       Remove from Cart
                     </Button>
@@ -111,6 +113,7 @@ function AllPlantsComponent(props) {
                       color="secondary"
                       fullWidth
                       onClick={() => handleAddPlantToCart(plant.id)}
+                      disabled={isUiLoading}
                     >
                       Add to Cart
                     </Button>
@@ -120,6 +123,7 @@ function AllPlantsComponent(props) {
               <ProductDetailsComponent
                 plant={plant}
                 buyNow={() => handleBuyNow(plant.id)}
+                isUiLoading={isUiLoading}
               />
             </Grid>
           ))}
@@ -135,11 +139,13 @@ AllPlantsComponent.propTypes = {
   addPlantToCart: PropTypes.func.isRequired,
   removePlantFromCart: PropTypes.func.isRequired,
   createOrder: PropTypes.func.isRequired,
+  isUiLoading: PropTypes.bool.isRequired,
 };
 
 const matpStateToProps = (state) => ({
   plants: state.plants.plants,
   cartPlants: state.cart.cart.plants,
+  isUiLoading: state.ui.isUiLoading,
 });
 
 export default connect(matpStateToProps, {

@@ -33,7 +33,7 @@ export const getPlants = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response && err.response.status === 401) {
         dispatch({
           type: UNAUTHORIZED_ACCESS,
         });

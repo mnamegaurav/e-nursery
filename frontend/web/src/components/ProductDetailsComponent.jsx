@@ -42,7 +42,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ProductDetailsComponent(props) {
-  const { plant, buyNow } = props;
+  const { plant, buyNow, isUiLoading } = props;
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -63,8 +63,9 @@ export default function ProductDetailsComponent(props) {
         fullWidth
         variant="contained"
         onClick={handleClickOpen}
+        disabled={isUiLoading}
       >
-        Buy Now
+        Details
       </Button>
       <Grid container spacing={4}>
         <Dialog
@@ -107,6 +108,7 @@ export default function ProductDetailsComponent(props) {
                 fullWidth
                 variant="contained"
                 onClick={buyNow}
+                disabled={isUiLoading}
               >
                 Buy Now
               </Button>

@@ -204,7 +204,12 @@ function ProfileComponent(props) {
             <Button onClick={handleCloseDeactivateDialog} color="inherit">
               No
             </Button>
-            <Button onClick={handleDeactivateUser} color="secondary" autoFocus>
+            <Button
+              onClick={handleDeactivateUser}
+              color="secondary"
+              disabled={isUiLoading}
+              autoFocus
+            >
               Deactivate
             </Button>
           </DialogActions>

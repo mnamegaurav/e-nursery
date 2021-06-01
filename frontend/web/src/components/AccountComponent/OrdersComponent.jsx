@@ -18,7 +18,7 @@ import NoImage from "../../assets/img/oops-no-image.jpg";
 import { getOrders, cancelOrder } from "../../store/actions/orders";
 
 function OrdersComponent(props) {
-  const { classes, orders, getOrders, cancelOrder } = props;
+  const { classes, orders, getOrders, cancelOrder, isUiLoading } = props;
 
   React.useEffect(() => {
     getOrders();
@@ -95,6 +95,7 @@ function OrdersComponent(props) {
                     size="small"
                     color="secondary"
                     onClick={() => handleCancelOrder(order.id)}
+                    disabled={isUiLoading}
                   >
                     Request Cancellation
                   </Button>
@@ -147,10 +148,12 @@ OrdersComponent.propTypes = {
   orders: PropTypes.array.isRequired,
   getOrders: PropTypes.func.isRequired,
   cancelOrder: PropTypes.func.isRequired,
+  isUiLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   orders: state.orders.orders,
+  isUiLoading: state.ui.isUiLoading,
 });
 
 export default connect(mapStateToProps, { getOrders, cancelOrder })(
