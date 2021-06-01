@@ -76,10 +76,9 @@ function CartComponent(props) {
     removePlantFromCart(plantId);
   };
 
-  const handleCheckout = () => {
-    console.log(cart.plants);
-    createOrder(cart.plants);
-    emptyCart();
+  const handleCheckout = async () => {
+    await createOrder(cart.plants);
+    await emptyCart();
   };
 
   const renderPlants = () => {

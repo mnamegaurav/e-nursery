@@ -30,7 +30,6 @@ function ProfileComponent(props) {
     e.preventDefault();
     // update user detail with userDetailUpdate action
     if (userDetail) {
-      console.log("submitting...");
       updateUserDetails(userDetail);
     }
   };

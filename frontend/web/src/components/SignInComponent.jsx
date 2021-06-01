@@ -69,10 +69,8 @@ function SignInComponent(props) {
     e.preventDefault();
 
     // submit the form
-    console.log("submitted");
     const { email, password } = crendentials;
     if (email && password) {
-      console.log(email, password);
       signIn(email, password);
     }
   };

@@ -79,7 +79,6 @@ function SignUpComponent(props) {
   };
 
   const handleInputChange = (e) => {
-    // console.log(e.target.name, e.target.value);
     // Set the values into current state
     setCrendentials((prevState) => ({
       ...prevState,
@@ -88,7 +87,6 @@ function SignUpComponent(props) {
   };
 
   const handleCheckboxChange = (e) => {
-    // console.log(e.target.name, e.target.checked);
     setCrendentials((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.checked,
