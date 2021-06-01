@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     // flexGrow: 1,
   },
+  plant: {
+    marginBottom: theme.spacing(5),
+  },
 }));
 
 function AllPlantsComponent(props) {
@@ -72,7 +75,14 @@ function AllPlantsComponent(props) {
             <Typography variant="h5">All Plants</Typography>
           </Grid>
           {plants.map((plant, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
+            <Grid
+              item
+              key={index}
+              xs={12}
+              sm={6}
+              md={4}
+              className={classes.plant}
+            >
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
