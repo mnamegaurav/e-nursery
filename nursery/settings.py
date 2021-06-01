@@ -26,8 +26,6 @@ if os.path.isfile(dotenv_file):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 # Application definition
 
@@ -159,6 +157,16 @@ SIMPLE_JWT = {
 # Other Settings and Configs
 from nursery.jazzmin_config import *
 
+"""
+If you are running locally-
+    1. Create a 'local_settings.py' in the same location of 'settings.py'
+    2. Write 'DEBUG=True' in the 'local_settings.py' file.
+"""
+try:
+    from nursery.local_settings import *
+except ImportError as e:
+    from nursery.prod_settings import *
+
 
 if DEBUG:
     # All the settings when project is running locally
@@ -174,14 +182,14 @@ if DEBUG:
             "django_extensions",
         ]
     )
-
-
-"""
-If you are running locally-
-    1. Create a 'local_settings.py' in the same location of 'settings.py'
-    2. Write 'DEBUG=True' in the 'local_settings.py' file.
-"""
-try:
-    from nursery.local_settings import *
-except ImportError as e:
-    from nursery.prod_settings import *
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ["DB_NAME"],
+            "USER": os.environ["DB_USER"],
+            "PORT": os.environ["DB_PORT"],
+            "HOST": os.environ["DB_HOST"],
+            "PASSWORD": os.environ["DB_PASSWORD"],
+        }
+    }

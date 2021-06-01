@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const initialCredentials = {
-  is_nursery: null,
+  is_nursery: false,
   email: null,
   password1: null,
   password2: null,
