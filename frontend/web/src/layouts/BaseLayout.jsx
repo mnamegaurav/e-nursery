@@ -44,6 +44,8 @@ function BaseLayout(props) {
 
 BaseLayout.propTypes = {
   isUiLoading: PropTypes.bool.isRequired,
+  getCart: PropTypes.func.isRequired,
+  children: PropTypes.object.isRequired,
 };
 
 const matpStateToProps = (state) => ({

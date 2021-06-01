@@ -86,17 +86,11 @@ function AllPlantsComponent(props) {
                   <Typography>{plant.name}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size="small"
-                    color="secondary"
-                    onClick={() => handleBuyNow(plant.id)}
-                  >
-                    Buy Now
-                  </Button>
                   {cartPlants.includes(plant.id) ? (
                     <Button
                       size="small"
                       color="secondary"
+                      fullWidth
                       onClick={() => handleRemovePlantFromCart(plant.id)}
                     >
                       Remove from Cart
@@ -105,6 +99,7 @@ function AllPlantsComponent(props) {
                     <Button
                       size="small"
                       color="secondary"
+                      fullWidth
                       onClick={() => handleAddPlantToCart(plant.id)}
                     >
                       Add to Cart
@@ -112,7 +107,10 @@ function AllPlantsComponent(props) {
                   )}
                 </CardActions>
               </Card>
-              <ProductDetailsComponent plant={plant} />
+              <ProductDetailsComponent
+                plant={plant}
+                buyNow={() => handleBuyNow(plant.id)}
+              />
             </Grid>
           ))}
         </Grid>
