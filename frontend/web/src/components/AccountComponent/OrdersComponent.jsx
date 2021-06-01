@@ -70,7 +70,7 @@ function OrdersComponent(props) {
                     Order ID - {order.id}
                   </Typography>
                   <Typography variant="h5">{order.name}</Typography>
-                  <Typography variant="h4">₹ {order.total_price}</Typography>
+                  <Typography variant="h4">₹ {order.total_ammount}</Typography>
                   {order.is_active ? (
                     <Typography variant="h6" color="textSecondary">
                       On its Way

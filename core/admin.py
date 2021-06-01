@@ -16,7 +16,7 @@ class PlantAdmin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('id', 'get_plants', 'added_on', 'total_price',)
+    list_display = ('id', 'get_plants', 'added_on', 'total_ammount',)
 
     def get_plants(self, obj):
         return obj.all_plants
@@ -26,7 +26,7 @@ class CartAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'get_plants', 'added_on',
-                    'total_price', 'is_active', 'user')
+                    'total_ammount', 'is_active', 'user', 'status')
     list_editable = ('is_active',)
 
     def get_plants(self, obj):

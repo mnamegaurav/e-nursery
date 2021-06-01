@@ -66,7 +66,7 @@ function CartComponent(props) {
 
   const { isUiLoading, createOrder, emptyCart, removePlantFromCart, cart } =
     props;
-  const { all_plants: plants, total_price: totalPrice } = cart;
+  const { all_plants: plants, total_ammount: totalPrice } = cart;
 
   const handleEmptyCart = () => {
     emptyCart();

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-# local imports
+from core.utils import total_ammount_calculator
+
 from core.models import Shop, Plant, Cart, Order
 
 
@@ -26,22 +27,22 @@ class PlantSerializer(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
     all_plants = PlantSerializer(many=True, read_only=True)
-    total_price = serializers.ReadOnlyField()
+    total_ammount = serializers.ReadOnlyField()
 
     class Meta:
         model = Cart
-        fields = ('plants', 'added_on', 'total_price', 'all_plants')
+        fields = ('plants', 'added_on', 'total_ammount', 'all_plants')
 
 
 class OrderSerializer(serializers.ModelSerializer):
     all_plants = PlantSerializer(many=True, read_only=True)
-    total_price = serializers.ReadOnlyField()
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Order
         fields = ('id', 'plants', 'added_on',
-                  'total_price', 'user', 'is_active', 'all_plants')
+                  'total_ammount', 'user', 'is_active', 'all_plants')
+        read_only_fields = ('total_ammount',)
 
     # overrride the update method to change the active status of order
     def update(self, instance, validated_data):
@@ -50,4 +51,6 @@ class OrderSerializer(serializers.ModelSerializer):
 
     # overrride the create method to add payment and other things
     def create(self, validated_data):
+        plants = self.validated_data.get('plants')
+        validated_data['total_ammount'] = total_ammount_calculator(plants)
         return super().create(validated_data)
