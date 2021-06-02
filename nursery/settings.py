@@ -170,7 +170,7 @@ try:
 except ImportError as e:
     from nursery.prod_settings import *
 
-DEBUG=False
+
 if DEBUG:
     # All the settings when project is running locally
     DATABASES = {
