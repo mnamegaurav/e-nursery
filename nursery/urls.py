@@ -17,29 +17,60 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf.urls import url
 from django.views.generic import TemplateView
 
 from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
+from rest_framework import permissions
+
+from drf_yasg.views import get_schema_view as get_redoc_schema
+from drf_yasg import openapi
+
+schema_view = get_redoc_schema(
+    openapi.Info(
+        title="E-Nursery API",
+        default_version='v1',
+        description="Test description",
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls')),
-    path('', include('accounts.urls')),
 
     path('openapi', get_schema_view(
-        title="Your Project",
-        description="API for all things …",
+        title="E-Nursery",
+        description="API for all E-Nursery",
         version="1.0.0"
     ), name='openapi-schema'),
 
-    path('', TemplateView.as_view(
-        template_name='doc.html',
-        extra_context={'schema_url': 'openapi-schema'}
-    ), name='api_doc'),
+    # drf CoreAPI docs
+    path('', include_docs_urls(title="E-Nursery"), name='drf-doc'),
+
+    # Open API Docs ReDoc
+    path(
+        'redoc/',
+        schema_view.with_ui(
+            'redoc', cache_timeout=0
+        ), name='redoc'
+    ),
+
+    # Open API Docs Swagger
+    path(
+        'swagger/',
+        TemplateView.as_view(
+            template_name='doc.html',
+            extra_context={'schema_url': 'openapi-schema'}
+        ), name='swagger-doc'
+    ),
+
+    path('', include('core.urls')),
+    path('', include('accounts.urls')),
+
 ]
 
-if settings.DEBUG == True:
+if settings.DEBUG:
     urlpatterns.extend(
         static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
 

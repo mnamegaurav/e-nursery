@@ -24,11 +24,22 @@ import {
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
 
+export const getAccessTokenByRefreshToken = (refreshToken, dispatch) => {
+  console.log(refreshToken);
+
+  // retrieve the access token
+  // ...
+
+  // load the user
+  dispatch(loadUser());
+};
+
 // Load User during app loading
 export const loadUser = () => (dispatch, getState) => {
   // GET TOKEN FROM STATE
   const auth = getState().auth;
   const accessToken = auth.access;
+  const refreshToken = auth.refresh;
 
   if (accessToken) {
     // Start Loading the UI
@@ -52,9 +63,14 @@ export const loadUser = () => (dispatch, getState) => {
         });
       })
       .catch((err) => {
-        dispatch({
-          type: USER_LOADING_FAIL,
-        });
+        if (refreshToken) {
+          // try using refresh token to load the user
+          getAccessTokenByRefreshToken(refreshToken, dispatch);
+        } else {
+          dispatch({
+            type: USER_LOADING_FAIL,
+          });
+        }
         // End Loading the UI
         dispatch({
           type: UI_LOADING_END,
