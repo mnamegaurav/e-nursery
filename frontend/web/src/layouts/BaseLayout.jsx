@@ -1,5 +1,6 @@
 import React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -33,6 +34,7 @@ function BaseLayout(props) {
   return (
     <div className={classes.root}>
       <HeaderComponent classes={classes} />
+      <CssBaseline />
       {isUiLoading && (
         <LinearProgress color="secondary" className={classes.linearProgress} />
       )}

@@ -57,7 +57,7 @@ function OrdersComponent(props) {
         return (
           <div key={index}>
             <Accordion
-              defaultExpanded={order.is_active}
+              defaultExpanded={false}
               className={classes.orderAccordian}
             >
               <AccordionSummary
