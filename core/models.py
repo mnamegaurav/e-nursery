@@ -11,6 +11,23 @@ User = get_user_model()
 # Create your models here.
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=150)
+    added_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class State(models.Model):
+    name = models.CharField(max_length=150)
+    country = models.ForeignKey("core.Country", on_delete=models.CASCADE)
+    added_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Shop(models.Model):
     name = models.CharField(max_length=50)
     added_on = models.DateTimeField(auto_now_add=True)
@@ -24,7 +41,7 @@ class Plant(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to='plants', null=True, blank=True)
     price = models.PositiveSmallIntegerField()
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    shop = models.ForeignKey("core.Shop", on_delete=models.CASCADE)
     added_on = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

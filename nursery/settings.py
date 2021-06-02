@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
+    'phonenumber_field',
 
     # local apps
     'core.apps.CoreConfig',

@@ -146,15 +146,18 @@ export const signIn = (email, password) => (dispatch) => {
     })
     .catch((err) => {
       if (err.response) {
+        console.log(err);
         dispatch({
           type: SIGNIN_FAIL,
+          payload: err.response.data,
         });
         //Show the alert
         dispatch({
           type: SHOW_ALERT_MESSAGE,
           payload: {
             text:
-              (err.response && err.response.detail) || "Some Error occured.",
+              (err.response.data && err.response.data.detail) ||
+              "Oops! Some Error occured",
             type: "error",
           },
         });
@@ -202,13 +205,15 @@ export const signUp = (credentials) => (dispatch) => {
       if (err.response) {
         dispatch({
           type: SIGNUP_FAIL,
+          payload: err.response.data,
         });
         //Show the alert
         dispatch({
           type: SHOW_ALERT_MESSAGE,
           payload: {
             text:
-              (err.response && err.response.detail) || "Some Error occured.",
+              (err.response.data && err.response.data.detail) ||
+              "Some Error occured.",
             type: "error",
           },
         });
@@ -292,7 +297,9 @@ export const updateUserDetails = (userDetail) => (dispatch, getState) => {
           dispatch({
             type: SHOW_ALERT_MESSAGE,
             payload: {
-              text: "Unable to update the details, some error occured!",
+              text:
+                (err.response.data && err.response.data.detail) ||
+                "Unable to update the details, some error occured!",
               type: "error",
             },
           });

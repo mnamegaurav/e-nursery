@@ -18,7 +18,8 @@ const initialState = {
   access: localStorage.getItem("access") || null,
   isAuthenticated: false,
   isLoading: false,
-  user: null,
+  user: {},
+  errors: {},
 };
 
 export default function authReducer(state = initialState, action) {
@@ -35,6 +36,7 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         user: action.payload,
+        errors: {},
       };
     case SIGNIN_SUCCESS:
     case SIGNUP_SUCCESS:
@@ -45,6 +47,7 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         ...action.payload,
+        errors: {},
       };
     case SIGNIN_FAIL:
     case SIGNUP_FAIL:
@@ -60,12 +63,14 @@ export default function authReducer(state = initialState, action) {
         user: null,
         access: null,
         refresh: null,
+        errors: action.payload || state.errors,
       };
     case TOKEN_REFRESHED:
       localStorage.setItem("access", action.payload);
       return {
         ...state,
         access: action.payload,
+        errors: {},
       };
     default:
       return state;
