@@ -6,11 +6,13 @@ import {
   SIGNOUT_API,
   USER_DETAIL_API,
   USER_DEACTIVATE_API,
+  TOKEN_REFRESH_API,
 } from "../../api";
 import {
   USER_LOADING,
   USER_LOADING_SUCCESS,
   USER_LOADING_FAIL,
+  TOKEN_REFRESHED,
   USER_DEACTIVATED,
   SIGNIN_SUCCESS,
   SIGNIN_FAIL,
@@ -24,14 +26,38 @@ import {
 } from "../actions/types";
 import { tokenConfig } from "../../utils";
 
-export const getAccessTokenByRefreshToken = (refreshToken, dispatch) => {
-  console.log(refreshToken);
-
+export const getAccessTokenByRefreshToken = (
+  accessToken,
+  refreshToken,
+  dispatch
+) => {
   // retrieve the access token
-  // ...
-
-  // load the user
-  dispatch(loadUser());
+  axios
+    .post(
+      TOKEN_REFRESH_API,
+      JSON.stringify({ refresh: refreshToken }),
+      tokenConfig(accessToken)
+    )
+    .then((res) => {
+      if (res.data && res.data.access) {
+        // Token refreshed
+        dispatch({
+          type: TOKEN_REFRESHED,
+          payload: res.data.access,
+        });
+        // load the user
+        dispatch(loadUser());
+      } else {
+        dispatch({
+          type: USER_LOADING_FAIL,
+        });
+      }
+    })
+    .catch((err) => {
+      dispatch({
+        type: USER_LOADING_FAIL,
+      });
+    });
 };
 
 // Load User during app loading
@@ -65,7 +91,7 @@ export const loadUser = () => (dispatch, getState) => {
       .catch((err) => {
         if (refreshToken) {
           // try using refresh token to load the user
-          getAccessTokenByRefreshToken(refreshToken, dispatch);
+          getAccessTokenByRefreshToken(accessToken, refreshToken, dispatch);
         } else {
           dispatch({
             type: USER_LOADING_FAIL,

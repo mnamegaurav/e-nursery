@@ -94,7 +94,7 @@ function ProfileComponent(props) {
                       label="Full Name"
                       name="full_name"
                       onChange={handleInputChange}
-                      value={userDetail.full_name}
+                      value={userDetail.full_name || ""}
                       disabled={!isEditEnabled}
                     />
                   </Grid>
@@ -108,7 +108,7 @@ function ProfileComponent(props) {
                       label="Username"
                       name="username"
                       onChange={handleInputChange}
-                      value={userDetail.username}
+                      value={userDetail.username || ""}
                       disabled={!isEditEnabled}
                     />
                   </Grid>
@@ -122,7 +122,7 @@ function ProfileComponent(props) {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
-                      onChange={handleInputChange}
+                      onChange={handleInputChange || ""}
                       value={userDetail.email}
                       disabled={!isEditEnabled}
                     />

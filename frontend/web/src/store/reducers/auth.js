@@ -2,6 +2,7 @@ import {
   USER_LOADING,
   USER_LOADING_SUCCESS,
   USER_LOADING_FAIL,
+  TOKEN_REFRESHED,
   USER_DETAILS_UPDATED,
   USER_DEACTIVATED,
   SIGNIN_SUCCESS,
@@ -59,6 +60,12 @@ export default function authReducer(state = initialState, action) {
         user: null,
         access: null,
         refresh: null,
+      };
+    case TOKEN_REFRESHED:
+      localStorage.setItem("access", action.payload);
+      return {
+        ...state,
+        access: action.payload,
       };
     default:
       return state;
