@@ -2,10 +2,20 @@ from rest_framework import serializers
 
 from django.contrib.auth import get_user_model
 
+from accounts.models import Address
+
 User = get_user_model()
 
 
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = '__all__'
+
+
 class UserDetailSerializer(serializers.HyperlinkedModelSerializer):
+    addresses = AddressSerializer(many=True, read_only=True)
+
     class Meta:
         model = User
         fields = (
@@ -13,8 +23,10 @@ class UserDetailSerializer(serializers.HyperlinkedModelSerializer):
             'is_nursery',
             'full_name',
             'username',
+            'addresses',
         )
         read_only_fields = ('is_nursery',)
+        depth = 1
 
 
 class UserDeactivateSerializer(serializers.ModelSerializer):

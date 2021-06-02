@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -9,7 +7,11 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from accounts.serializers import UserSignUpSerializer, UserDetailSerializer, UserDeactivateSerializer
+from accounts.serializers import (
+    UserSignUpSerializer,
+    UserDetailSerializer,
+    UserDeactivateSerializer
+)
 
 # Create your views here.
 
@@ -50,7 +52,9 @@ class UserSignInAPIView(TokenObtainPairView):
         if serializer.is_valid(raise_exception=True):
             user = UserDetailSerializer(serializer.user).data
             serializer.validated_data.update({"user": user})
-            return Response(serializer.validated_data, status=status.HTTP_200_OK)
+            return Response(
+                serializer.validated_data,
+            )
 
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
@@ -82,4 +86,5 @@ class UserSignOutAPIView(APIView):
             token_obj.blacklist()
             return Response(status=status.HTTP_200_OK)
         except Exception as e:
+            print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
