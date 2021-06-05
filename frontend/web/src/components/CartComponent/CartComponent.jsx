@@ -12,9 +12,9 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
-import NoImage from "../assets/img/oops-no-image.jpg";
-import { emptyCart, removePlantFromCart } from "../store/actions/cart";
-import { createOrder } from "../store/actions/orders";
+import NoImage from "../../assets/img/oops-no-image.jpg";
+import { emptyCart, removePlantFromCart } from "../../store/actions/cart";
+import { createOrder } from "../../store/actions/orders";
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {

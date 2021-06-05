@@ -13,7 +13,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Slide from "@material-ui/core/Slide";
 import PropTypes from "prop-types";
 
-import NoImage from "../assets/img/oops-no-image.jpg";
+import NoImage from "../../assets/img/oops-no-image.jpg";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

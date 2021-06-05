@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
-import ProductDetailsComponent from "../ProductDetailsComponent";
+import ProductDetailsComponent from "./ProductDetailsComponent";
 import NoImage from "../../assets/img/oops-no-image.jpg";
 import { getPlants } from "../../store/actions/plants";
 import { addPlantToCart, removePlantFromCart } from "../../store/actions/cart";
