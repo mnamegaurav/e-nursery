@@ -157,6 +157,12 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
+
+# Razor Pa settings
+RAZOR_PAY_API_KEY = os.environ["RAZOR_PAY_API_KEY"]
+RAZOR_PAY_API_SECRET = os.environ["RAZOR_PAY_API_SECRET"]
+
+
 # Other Settings and Configs
 from nursery.jazzmin_config import *
 
